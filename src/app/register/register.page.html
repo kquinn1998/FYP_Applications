@@ -17,10 +17,10 @@
               <ion-input  name="name" type="text" placeholder="Name" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+              <ion-input name="email" type="email" placeholder="your@email.com" [(ngModel)]="email" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+              <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="password" ngModel required></ion-input>
             </ion-item>
             <ion-item>
               <ion-input name="confirm" type="password" placeholder="Confirm Password" ngModel required></ion-input>
@@ -34,7 +34,7 @@
             </ion-item>
           </div>
           <div padding>
-            <ion-button color="dark"  size="large" type="submit" expand="block">Register</ion-button>
+            <ion-button color="dark"  size="large" type="submit" expand="block" (click)="register()">Register</ion-button>
           </div>
           <div padding>
             <ion-button size="large" routerLink='/login' expand="block">Back</ion-button>

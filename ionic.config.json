@@ -1,5 +1,7 @@
 {
   "name": "Revolute_Fitness",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

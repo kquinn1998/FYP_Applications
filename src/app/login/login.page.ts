@@ -23,6 +23,9 @@ export class LoginPage implements OnInit {
       //const res = this.afAuth.auth.signInWithCredential
     } catch(err){
       console.dir(err);
+      if(err.code === "auth/user-not-found"){
+        console.log("User not found");
+      }
     }
   }
 
