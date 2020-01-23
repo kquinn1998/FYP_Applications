@@ -17,6 +17,7 @@ export class AuthService {
   }
 
   checkIfLoggedIn() {
+    console.log('checking.............................');
     return this.loggedIn;
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginPage implements OnInit {
   email: '';
   password: '';
 
-  constructor(public afAuth: AngularFireAuth, private auth: AuthService) { }
+  constructor(public afAuth: AngularFireAuth, private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -22,6 +23,7 @@ export class LoginPage implements OnInit {
     try {
       const res = this.afAuth.auth.signInWithEmailAndPassword(email, password);
       this.auth.userLoggedIn();
+      this.router.navigate(['/home']);
       // const res = this.afAuth.auth.signInWithCredential
     } catch (err) {
       console.dir(err);
