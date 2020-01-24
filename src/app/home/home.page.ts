@@ -12,10 +12,10 @@ export class HomePage {
   constructor(private auth: AuthService, private router: Router) {}
   
   ngOnInit () {
-    console.log('hiiiii');
+    /*console.log('hiiiii');
     if(!this.auth.checkIfLoggedIn()) {
       this.router.navigate(['/login']);
-    }
+    }*/
   }
 
 }
