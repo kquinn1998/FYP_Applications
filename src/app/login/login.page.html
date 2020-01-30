@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content  color="light">
-  <form #login_form="ngForm" (ngSubmit="onSubmit(login_form)")>
+  <form #login_form="ngForm" (ngSubmit)="login(login_form)">
     <ion-grid>
       <ion-row color="dark" justify-content-center>
         <ion-col align-self-center size-md="8" size-lg="7" size-xs="12">
@@ -21,7 +21,7 @@
             </ion-item>
           </div>
           <div padding>
-            <ion-button color="dark"  size="large" type="submit" expand="block" (click)='login()'>Login</ion-button>
+            <ion-button color="dark"  size="large" type="submit" expand="block">Login</ion-button>
           </div>
           <div padding>
             <ion-button size="large" routerLink='/register' expand="block">Register</ion-button>

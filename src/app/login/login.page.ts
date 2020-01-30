@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(form: NgForm) {
+  login(form: NgForm) {
 
   }
 

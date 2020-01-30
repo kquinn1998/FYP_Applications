@@ -4,10 +4,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
@@ -15,6 +11,19 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },  {
+    path: 'view-workouts',
+    loadChildren: () => import('./view-workouts/view-workouts.module').then( m => m.ViewWorkoutsPageModule)
+  },
+  {
+    path: 'record-workout',
+    loadChildren: () => import('./record-workout/record-workout.module').then( m => m.RecordWorkoutPageModule)
+  },
+
+
 ];
 
 @NgModule({
