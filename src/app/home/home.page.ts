@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,13 +8,9 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor() {}
   
   ngOnInit () {
-    /*console.log('hiiiii');
-    if(!this.auth.checkIfLoggedIn()) {
-      this.router.navigate(['/login']);
-    }*/
   }
 
 }

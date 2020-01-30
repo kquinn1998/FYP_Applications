@@ -14,6 +14,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,8 @@ import { IonicStorageModule } from '@ionic/storage';
             AngularFireModule.initializeApp(environment.config),
             AngularFireAuthModule,
             HttpClientModule,
-            IonicStorageModule.forRoot()],
+            IonicStorageModule.forRoot(),
+            FormsModule],
   providers: [
     StatusBar,
     SplashScreen,
