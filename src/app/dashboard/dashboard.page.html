@@ -9,11 +9,12 @@
     <ion-row>
       <ion-col size-sm="6" offset-sm="3">
           <ion-button color="dark"  size="large" expand="full">View Workouts</ion-button>
-          <ion-button color="primary"  size="large" expand="full">Record Workout</ion-button>
+          <ion-button color="primary"  size="large" expand="full" routerLink='/record-workout'>Record Workout</ion-button>
           <ion-button color="dark"  size="large" expand="full">View Stats</ion-button>
           <ion-button color="primary"  size="large" expand="full">Exercise Analysis</ion-button>
           <ion-button color="dark"  size="large" expand="full">Settings</ion-button>
-      </ion-col>
+          <ion-button color="primary"  size="large" expand="full" (click)="logout()">Logout</ion-button>
+        </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
