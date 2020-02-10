@@ -30,7 +30,11 @@ export class RecordWorkoutPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]
       })
-    })
+    });
+  }
+
+  recordWorkout() {
+    console.log(this.form);
   }
 
 }

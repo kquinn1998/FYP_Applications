@@ -5,36 +5,43 @@
 </ion-header>
 
 <ion-content>
-  <ion-row>
-    <ion-col size-sm="6" offset-sm="3">
-      <ion-item>
-        <ion-label position="floating">Name</ion-label>
-        <ion-input type="text" autocomplete autocorrect></ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size-sm="6" offset-sm="3">
-      <ion-item>
-        <ion-label position="floating">Description</ion-label>
-        <ion-textarea type="text" autocomplete autocorrect></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size-sm="6" offset-sm="3">
-      <ion-item>
-        <ion-label position="floating">Exercise 1</ion-label>
-        <ion-input type="text" autocomplete autocorrect></ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size-sm="6" offset-sm="3">
-      <ion-item>
-        <ion-label position="floating">Exercise 2</ion-label>
-        <ion-input type="text" autocomplete autocorrect></ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <form [formGroup]="form" (ngSubmit)="recordWorkout()">
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-item>
+          <ion-label position="floating">Name</ion-label>
+          <ion-input type="text" autocomplete autocorrect formControlName="title"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-item>
+          <ion-label position="floating">Description</ion-label>
+          <ion-textarea type="text" autocomplete autocorrect formControlName="description"></ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-item>
+          <ion-label position="floating">Exercise 1</ion-label>
+          <ion-input type="text" autocomplete autocorrect formControlName="exerciseOne"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-item>
+          <ion-label position="floating">Exercise 2</ion-label>
+          <ion-input type="text" autocomplete autocorrect formControlName="exerciseTwo"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-button color="dark"  size="large" type="submit" expand="full">Record</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>
