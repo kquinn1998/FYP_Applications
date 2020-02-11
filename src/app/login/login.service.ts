@@ -24,19 +24,24 @@ export class AuthService {
   async login(email: string, password: string) {
     try {
       const res = await this.afAuth.auth.signInWithEmailAndPassword(email,password);
-      console.log(res);
-      this.isLoading = true;
-      this.loadingCtrl
-        .create({ keyboardClose: true, message: 'Logging in...' })
-        .then(loadingEl => {
-          loadingEl.present();
-          setTimeout(() => {
-            this.isLoading = false;
-            loadingEl.dismiss();
-            this.router.navigateByUrl('/dashboard');
-          }, 1500);
-        });
-      this._userIsAuthenticated = true;
+      const user = this.afAuth.auth.currentUser;
+      if(user.emailVerified){
+        console.log(res);
+        this.isLoading = true;
+        this.loadingCtrl
+          .create({ keyboardClose: true, message: 'Logging in...' })
+          .then(loadingEl => {
+            loadingEl.present();
+            setTimeout(() => {
+              this.isLoading = false;
+              loadingEl.dismiss();
+              this.router.navigateByUrl('/dashboard');
+            }, 1500);
+          });
+        this._userIsAuthenticated = true;
+      } else{
+        throw(console.error());
+      }
     } catch (err) {
       console.log(err);
       this.isLoading = true;
