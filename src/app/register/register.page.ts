@@ -17,7 +17,7 @@ export class RegisterPage implements OnInit {
   }
 
   async register(form: NgForm){
-    this.regService.register(form.value.email, form.value.password);
+    this.regService.register(form.value.email, form.value.password, form.value.name);
   }
 
 

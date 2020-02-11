@@ -57,9 +57,23 @@ export class AuthService {
     await this.afAuth.auth.signOut();
   }
 
-  async register(email: string, password: string) {
+  async register(email: string, password: string, name: string) {
     try {
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(email,password);
+      const user = this.afAuth.auth.currentUser;
+      user.updateProfile({
+        displayName: name,
+      }).then(function() {
+
+      }, function(error) {
+
+      });
+      user.sendEmailVerification().then(function() {
+        // Email sent.
+      }).catch(function(error) {
+        // An error happened.
+      });
+      this.logout();
       this.isLoading = true;
       this.loadingCtrl
         .create({ keyboardClose: true, message: 'Registering...' })
