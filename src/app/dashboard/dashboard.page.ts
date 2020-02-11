@@ -20,7 +20,6 @@ export class DashboardPage implements OnInit {
               private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
-    alert(this.authService.userIsAuthenticated);
   }
 
   logout() {

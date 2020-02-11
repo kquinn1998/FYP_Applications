@@ -24,7 +24,6 @@ export class LoginPage implements OnInit {
     public afAuth: AngularFireAuth) { }
 
   ngOnInit() {
-    alert(this.authService.userIsAuthenticated);
   }
 
   login(form: NgForm) {

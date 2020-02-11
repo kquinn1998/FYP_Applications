@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './login/login.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -13,14 +14,18 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule)
-  },  {
+    loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
     path: 'view-workouts',
-    loadChildren: () => import('./view-workouts/view-workouts.module').then( m => m.ViewWorkoutsPageModule)
+    loadChildren: () => import('./view-workouts/view-workouts.module').then( m => m.ViewWorkoutsPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'record-workout',
-    loadChildren: () => import('./record-workout/record-workout.module').then( m => m.RecordWorkoutPageModule)
+    loadChildren: () => import('./record-workout/record-workout.module').then( m => m.RecordWorkoutPageModule),
+    canLoad: [AuthGuard]
   },
 
 
