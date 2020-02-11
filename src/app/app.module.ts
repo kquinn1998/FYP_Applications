@@ -19,7 +19,10 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+  imports: [BrowserModule,
+            IonicModule.forRoot(),
+            AppRoutingModule,
+            AngularFireModule.initializeApp(environment.config),
             AngularFireAuthModule,
             HttpClientModule,
             IonicStorageModule.forRoot(),

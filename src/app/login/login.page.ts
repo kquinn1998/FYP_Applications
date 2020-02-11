@@ -20,25 +20,15 @@ export class LoginPage implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private loadingCtrl: LoadingController) { }
+    private loadingCtrl: LoadingController,
+    public afAuth: AngularFireAuth) { }
 
   ngOnInit() {
     alert(this.authService.userIsAuthenticated);
   }
 
   login(form: NgForm) {
-    this.isLoading = true;
-    this.authService.login();
-    this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Logging in...' })
-      .then(loadingEl => {
-        loadingEl.present();
-        setTimeout(() => {
-          this.isLoading = false;
-          loadingEl.dismiss();
-          this.router.navigateByUrl('/dashboard');
-        }, 1500);
-      });
+    this.authService.login(form.value.email, form.value.password);
   }
 
 }
