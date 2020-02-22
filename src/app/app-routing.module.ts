@@ -27,6 +27,12 @@ const routes: Routes = [
     loadChildren: () => import('./record-workout/record-workout.module').then( m => m.RecordWorkoutPageModule),
     canLoad: [AuthGuard]
   },
+  {
+    path: 'create-workout',
+    loadChildren: () => import('./create-workout/create-workout.module').then( m => m.CreateWorkoutPageModule),
+    canLoad: [AuthGuard]
+  },
+
 
 
 ];
