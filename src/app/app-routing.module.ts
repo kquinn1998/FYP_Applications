@@ -30,7 +30,7 @@ const routes: Routes = [
   {
     path: 'create-workout',
     loadChildren: () => import('./create-workout/create-workout.module').then( m => m.CreateWorkoutPageModule),
-    canLoad: [AuthGuard]
+    //canLoad: [AuthGuard]
   },
 
 

@@ -1,4 +1,4 @@
-export class CreateWorkout {
+export class Workout {
     constructor(
         public id: string,
         public title: string,

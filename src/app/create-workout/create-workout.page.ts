@@ -39,13 +39,25 @@ export class CreateWorkoutPage implements OnInit {
       exercises: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
-      })
+      }),
+      sets: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      reps: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
     });
     this.form = this.fb.group({
       title: [''],
       description: [''],
       exercise: [''],
-      exercises: this.fb.array([''])
+      exercises: this.fb.array(['']),
+      set: [''],
+      sets: this.fb.array(['']),
+      rep: [''],
+      reps: this.fb.array([''])
     });
 
   }
@@ -54,8 +66,18 @@ export class CreateWorkoutPage implements OnInit {
     return this.form.get('exercises') as FormArray;
   }
 
+  get sets() {
+    return this.form.get('sets') as FormArray;
+  }
+
+  get reps() {
+    return this.form.get('reps') as FormArray;
+  }
+
   addExercise() {
     this.exercises.push(this.fb.control(''));
+    this.sets.push(this.fb.control(''));
+    this.reps.push(this.fb.control(''));
   }
 
   createWorkout() {
@@ -64,6 +86,8 @@ export class CreateWorkoutPage implements OnInit {
       this.form.value.title,
       this.form.value.description,
       this.form.value.exercises,
+      this.form.value.sets,
+      this.form.value.reps,
     );
     console.log(newWorkout);
     //return this.http.post('https://revolutefitness-a92df.firebaseio.com/workouts.JSON', {newWorkout});
