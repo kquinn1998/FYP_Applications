@@ -2,10 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder} from '@angular/forms';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CreateWorkout } from './create-workout.model';
+import { Workout } from '../models/workout.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { take, tap, delay, switchMap, map } from 'rxjs/operators';
+import { WorkoutService } from '../services/workout.service'
+import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-record-workout',
@@ -15,6 +19,7 @@ import { take, tap, delay, switchMap, map } from 'rxjs/operators';
 export class CreateWorkoutPage implements OnInit {
 
   form: FormGroup;
+  isLoading = false;
 
   /*private httpOptions = {
     headers: new HttpHeaders({
@@ -24,7 +29,13 @@ export class CreateWorkoutPage implements OnInit {
     responseType: 'text'
   };*/
 
-  constructor(private http: HttpClient, private fb: FormBuilder) { }
+  constructor(
+    private http: HttpClient,
+    private fb: FormBuilder,
+    public workoutServ: WorkoutService, 
+    public router: Router,
+    private loadingCtrl: LoadingController
+    ) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -81,7 +92,7 @@ export class CreateWorkoutPage implements OnInit {
   }
 
   createWorkout() {
-    const newWorkout = new CreateWorkout(
+    const newWorkout = new Workout(
       "123456789",
       this.form.value.title,
       this.form.value.description,
@@ -90,10 +101,19 @@ export class CreateWorkoutPage implements OnInit {
       this.form.value.reps,
     );
     console.log(newWorkout);
-    //return this.http.post('https://revolutefitness-a92df.firebaseio.com/workouts.JSON', {newWorkout});
-    return this.http.post<{ 'kevin' }>('https://revolutefitness-a92df.firebaseio.com/workouts.json' , newWorkout)
-        .subscribe(data => {
-            console.log(data);
+    this.loadingCtrl
+        .create({ keyboardClose: true, message: 'Creating Workout...' })
+        .then(loadingEl => {
+          loadingEl.present();
+          this.workoutServ.createWorkout(
+            newWorkout
+          );
+          setTimeout(() => {
+            this.isLoading = false;
+            loadingEl.dismiss();
+            this.router.navigateByUrl('/view-workouts');
+          }, 2000);
         });
+    // this.router.navigateByUrl('');
   }
 }

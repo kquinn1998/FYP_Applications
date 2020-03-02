@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
-import { RecordWorkout } from './record-workout.model';
+import { Workout } from '../models/workout.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { take, tap, delay, switchMap, map } from 'rxjs/operators';
@@ -40,12 +40,13 @@ export class RecordWorkoutPage implements OnInit {
   }
 
   recordWorkout() {
-    const newWorkout = new RecordWorkout(
-      "12345667889",
+    const newWorkout = new Workout(
+      "123456789",
       this.form.value.title,
       this.form.value.description,
-      this.form.value.exerciseOne,
-      this.form.value.exerciseTwo,
+      this.form.value.exercises,
+      this.form.value.sets,
+      this.form.value.reps,
     );
     console.log("started");
     return this.http.post('https://revolutefitness-a92df.firebaseio.com/workouts.json', {...newWorkout});
