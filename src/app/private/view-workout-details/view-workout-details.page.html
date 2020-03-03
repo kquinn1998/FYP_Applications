@@ -1,0 +1,9 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isLoading ? 'Loading...' : workout.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p *ngIf="!isLoading">{{ workout.description }}</p>
+</ion-content>

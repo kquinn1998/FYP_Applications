@@ -1,6 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/dashboard"></ion-back-button></ion-buttons>
     <ion-title>Workouts</ion-title>
+    <ion-button slot="end" fill="clear" routerLink="/create-workout"><ion-icon color="secondary" name="add"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +13,8 @@
       <ion-col size-sm="6" offset-sm="3">
         <ion-list>
           <div *ngFor="let workout of workouts">
-            <ion-card>
+            <ion-card color="primary">
+              <div [routerLink]="['/','view-workouts', workout.id]">
               <ion-card-header>
                 <ion-card-subtitle>Workout</ion-card-subtitle>
                 <ion-card-title>{{ workout.title }}</ion-card-title>
@@ -19,10 +22,10 @@
               <ion-card-content>
                 {{ workout.description }}
               </ion-card-content>
+            </div>
             </ion-card>
           </div>
         </ion-list>
-        <ion-button color="dark"  size="large" expand="full" routerLink='../create-workout'>Create Workout</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
-import { Workout } from '../models/workout.model';
+import { Workout } from '../../models/workout.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { take, tap, delay, switchMap, map } from 'rxjs/operators';
@@ -41,7 +41,7 @@ export class RecordWorkoutPage implements OnInit {
 
   recordWorkout() {
     const newWorkout = new Workout(
-      "123456789",
+      "",
       this.form.value.title,
       this.form.value.description,
       this.form.value.exercises,

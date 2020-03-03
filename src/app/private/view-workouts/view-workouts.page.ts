@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Workout } from '../models/workout.model';
+import { Workout } from '../../models/workout.model';
 import { Subscription } from 'rxjs';
-import { WorkoutService } from '../services/workout.service';
+import { WorkoutService } from '../../services/workout.service';
 
 @Component({
   selector: 'app-view-workouts',

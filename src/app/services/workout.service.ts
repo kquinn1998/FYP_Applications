@@ -6,9 +6,9 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Workout } from '../models/workout.model';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, switchMap, take } from 'rxjs/operators';
 
-interface WorkoutData {
+interface WorkoutDataInt {
 	title:string;
 	description:string;
 	id: string;
@@ -28,34 +28,66 @@ export class WorkoutService {
 	
 	get workouts() {
 		return this._workouts.asObservable();
-	}
+  }
+  
+  getWorkout(id: string){
+    return this.http
+      .get<WorkoutDataInt>(
+        `https://revolutefitness-a92df.firebaseio.com/workouts/${id}.json`
+      )
+      .pipe(
+        map(workoutData => {
+          return new Workout(
+            id,
+            workoutData.title,
+            workoutData.description,
+            workoutData.exercises,
+            workoutData.sets,
+            workoutData.reps
+          )
+          }
+        )
+      );
+  }
 
   createWorkout(workout: Workout){
-    return this.http.post<{ }>('https://revolutefitness-a92df.firebaseio.com/workouts.json' , workout)
-        .subscribe(data => {
-            console.log(data);
-        });
+    let generatedId: string;
+    return this.http.post<{name: string}>('https://revolutefitness-a92df.firebaseio.com/workouts.json' ,{
+      ...workout,
+      id: null
+    })
+    .pipe(
+      switchMap(resData => {
+        generatedId = resData.name;
+        return this.workouts;
+      }),
+      take(1),
+      tap(workouts => {
+        workout.id = generatedId;
+        this._workouts.next(workouts.concat(workout));
+      })
+    )
   }
 
   fetchWorkouts(){
 		console.log("got here");
     return this.http
-      .get<{ [key: string]: WorkoutData }>(
+      .get<{ [key: string]: WorkoutDataInt }>(
         'https://revolutefitness-a92df.firebaseio.com/workouts.json'
       )
       .pipe(
-        map(workoutData => {
+        map(WorkoutDataInt => {
           const workouts = [];
-          for (const key in workoutData) {
-            if (workoutData.hasOwnProperty(key)) {
+          for (const key in WorkoutDataInt) {
+            if (WorkoutDataInt.hasOwnProperty(key)) {
               workouts.push(
                 new Workout(
-                  workoutData[key].id,
-                  workoutData[key].title,
-                  workoutData[key].description,
-                  workoutData[key].exercises,
-                  workoutData[key].sets,
-                  workoutData[key].reps
+                  key,
+                  WorkoutDataInt[key].title,
+                  WorkoutDataInt[key].description,
+                  WorkoutDataInt[key].exercises,
+                  WorkoutDataInt[key].sets,
+                  WorkoutDataInt[key].reps
                 )
               );
 

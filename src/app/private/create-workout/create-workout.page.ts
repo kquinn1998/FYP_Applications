@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder} from '@angular/forms';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Workout } from '../models/workout.model';
+import { Workout } from '../../models/workout.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { take, tap, delay, switchMap, map } from 'rxjs/operators';
-import { WorkoutService } from '../services/workout.service'
+import { WorkoutService } from '../../services/workout.service'
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 
@@ -93,7 +93,7 @@ export class CreateWorkoutPage implements OnInit {
 
   createWorkout() {
     const newWorkout = new Workout(
-      "123456789",
+      "",
       this.form.value.title,
       this.form.value.description,
       this.form.value.exercises,
@@ -107,12 +107,11 @@ export class CreateWorkoutPage implements OnInit {
           loadingEl.present();
           this.workoutServ.createWorkout(
             newWorkout
-          );
-          setTimeout(() => {
+          ).subscribe(() => {
             this.isLoading = false;
             loadingEl.dismiss();
             this.router.navigateByUrl('/view-workouts');
-          }, 2000);
+          });
         });
     // this.router.navigateByUrl('');
   }

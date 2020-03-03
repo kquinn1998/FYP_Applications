@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
-import { AuthService } from '../services/login.service';
+import { AuthService } from '../../services/login.service';
 
 @Component({
   selector: 'app-dashboard',

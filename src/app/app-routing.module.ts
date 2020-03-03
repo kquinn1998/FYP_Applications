@@ -6,32 +6,37 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./public/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'register',
-    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./public/register/register.module').then( m => m.RegisterPageModule)
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule),
+    loadChildren: () => import('./private/dashboard/dashboard.module').then( m => m.DashboardPageModule),
     //canLoad: [AuthGuard]
   },
   {
     path: 'view-workouts',
-    loadChildren: () => import('./view-workouts/view-workouts.module').then( m => m.ViewWorkoutsPageModule),
+    loadChildren: () => import('./private/view-workouts/view-workouts.module').then( m => m.ViewWorkoutsPageModule),
     //canLoad: [AuthGuard]
   },
   {
     path: 'record-workout',
-    loadChildren: () => import('./record-workout/record-workout.module').then( m => m.RecordWorkoutPageModule),
+    loadChildren: () => import('./private/record-workout/record-workout.module').then( m => m.RecordWorkoutPageModule),
     canLoad: [AuthGuard]
   },
   {
     path: 'create-workout',
-    loadChildren: () => import('./create-workout/create-workout.module').then( m => m.CreateWorkoutPageModule),
+    loadChildren: () => import('./private/create-workout/create-workout.module').then( m => m.CreateWorkoutPageModule),
     //canLoad: [AuthGuard]
   },
+  {
+    path: 'view-workouts/:workoutId',
+    loadChildren: () => import('./private/view-workout-details/view-workout-details.module').then( m => m.ViewWorkoutDetailsPageModule)
+  },
+
 
 
 

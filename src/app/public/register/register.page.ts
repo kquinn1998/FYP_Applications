@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app'; 
 import { NavController } from '@ionic/angular';
-import { AuthService } from '../services/login.service';
+import { AuthService } from '../../services/login.service';
 import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-register',
