@@ -50,9 +50,13 @@ export class WorkoutService {
       );
   }
 
+  editWorkout(workout:Workout){
+    
+  }
+
   createWorkout(workout: Workout){
     let generatedId: string;
-    return this.http.post<{name: string}>('https://revolutefitness-a92df.firebaseio.com/workouts.json' ,{
+    return this.http.put<{name: string}>('https://revolutefitness-a92df.firebaseio.com/workouts.json' ,{
       ...workout,
       id: null
     })
@@ -70,7 +74,7 @@ export class WorkoutService {
   }
 
   fetchWorkouts(){
-		console.log("got here");
+    console.log('got here');
     return this.http
       .get<{ [key: string]: WorkoutDataInt }>(
         'https://revolutefitness-a92df.firebaseio.com/workouts.json'
