@@ -35,7 +35,11 @@ const routes: Routes = [
   {
     path: 'view-workouts/:workoutId',
     loadChildren: () => import('./private/view-workout-details/view-workout-details.module').then( m => m.ViewWorkoutDetailsPageModule)
+  },  {
+    path: 'manage-clients',
+    loadChildren: () => import('./private/manage-clients/manage-clients.module').then( m => m.ManageClientsPageModule)
   },
+
 
 
 
