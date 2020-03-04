@@ -25,7 +25,6 @@ export class RegisterPage implements OnInit {
       form.value.bodyWeight,
       form.value.height,
     )
-    console.log(user);
     this.regService.register(user,form.value.password);
   }
 

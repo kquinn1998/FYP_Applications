@@ -3,7 +3,7 @@ export class User {
         public name: string,
         public email: string,
         public userType: string,
-        public bodyweigth: number,
+        public bodyWeigth: number,
         public height: number,
     ) {}
 }

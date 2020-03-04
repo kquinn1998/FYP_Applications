@@ -5,13 +5,27 @@ import { Router } from '@angular/router';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+
+interface UserDataInt {
+  name:string;
+  email:string;
+  userType:string;
+  bodyWeight:number;
+  height:number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private userSub: Subscription;
+
   private _userIsAuthenticated = false;
   private _userId;
+  private _currentUser;
+  
   private isLoading = false;
   private isLogin = true;
 
@@ -23,6 +37,10 @@ export class AuthService {
     return this._userId;
   }
 
+  get currentUser() {
+    return this._currentUser;
+  }
+
   constructor(public nav: NavController,
               private afAuth: AngularFireAuth,
               private router: Router,
@@ -30,12 +48,18 @@ export class AuthService {
               private http: HttpClient) {}
 
   async login(email: string, password: string) {
+    this.isLoading = true;
     try {
       const res = await this.afAuth.auth.signInWithEmailAndPassword(email,password);
       const user = this.afAuth.auth.currentUser;
       if(user.emailVerified){
         this._userId = user.uid;
-        this.isLoading = true;
+
+        this.userSub = this.getUserRecord().subscribe(userReturned => {
+          this._currentUser = userReturned;
+        });
+
+
         this.loadingCtrl
           .create({ keyboardClose: true, message: 'Logging in...' })
           .then(loadingEl => {
@@ -67,6 +91,8 @@ export class AuthService {
 
   async logout() {
     this._userIsAuthenticated = false;
+    this._userId = null;
+    this._currentUser = null;
     await this.afAuth.auth.signOut();
   }
 
@@ -91,7 +117,6 @@ export class AuthService {
         // An error happened.
       });
 
-
       this.logout();
       this.loadingCtrl
         .create({ keyboardClose: true, message: 'Registering...' })
@@ -103,7 +128,6 @@ export class AuthService {
             loadingEl.dismiss();
           }, 1500);
         });
-      console.log(res);
     } catch(err) {
       console.dir(err);
     }
@@ -113,6 +137,25 @@ export class AuthService {
     return this.http.put(`https://revolutefitness-a92df.firebaseio.com/users/${uid}.json` ,{
       ...user,
     })
+  }
+
+  getUserRecord(){
+    return this.http
+      .get<UserDataInt>(
+        `https://revolutefitness-a92df.firebaseio.com/users/${this._userId}.json`
+      )
+      .pipe(
+        map(userData => {
+          return new User(
+            userData.name,
+            userData.email,
+            userData.userType,
+            userData.bodyWeight,
+            userData.height,
+          )
+          }
+        )
+      );
   }
 }
 
