@@ -13,7 +13,7 @@
 
           <ion-button color="primary"  size="large" expand="full" routerLink='/record-workout'>Record Workout</ion-button>
           
-          <ion-button *ngIf="loginServ.currentUser.userType == 'personal-trainer'" color="dark"  size="large" expand="full" routerLink='/manage-clients'>Manage Clients</ion-button>
+          <ion-button *ngIf="userType == 'personal-trainer'" color="dark"  size="large" expand="full" routerLink='/manage-clients'>Manage Clients</ion-button>
          
           <ion-button color="primary"  size="large" expand="full">View Stats</ion-button>
          

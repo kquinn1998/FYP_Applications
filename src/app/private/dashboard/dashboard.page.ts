@@ -23,6 +23,7 @@ export class DashboardPage implements OnInit {
               private loginServ: AuthService) { }
 
   ngOnInit() {
+    this.userType = this.loginServ.currentUser.userType;
   }
 
   logout() {
