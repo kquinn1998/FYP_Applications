@@ -7,6 +7,7 @@ import { Workout } from '../models/workout.model';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { map, tap, switchMap, take } from 'rxjs/operators';
+import { AuthService } from './login.service';
 
 interface WorkoutDataInt {
 	title:string;
@@ -24,7 +25,7 @@ export class WorkoutService {
 
 	private _workouts = new BehaviorSubject<Workout[]>([]);
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient, private loginServ: AuthService) {}
 	
 	get workouts() {
 		return this._workouts.asObservable();
@@ -33,7 +34,7 @@ export class WorkoutService {
   getWorkout(id: string){
     return this.http
       .get<WorkoutDataInt>(
-        `https://revolutefitness-a92df.firebaseio.com/workouts/${id}.json`
+        `https://revolutefitness-a92df.firebaseio.com/workouts/${this.loginServ.userId}/${id}.json`
       )
       .pipe(
         map(workoutData => {
@@ -56,7 +57,7 @@ export class WorkoutService {
 
   createWorkout(workout: Workout){
     let generatedId: string;
-    return this.http.put<{name: string}>('https://revolutefitness-a92df.firebaseio.com/workouts.json' ,{
+    return this.http.post<{name: string}>(`https://revolutefitness-a92df.firebaseio.com/workouts/${this.loginServ.userId}.json` ,{
       ...workout,
       id: null
     })
@@ -77,7 +78,7 @@ export class WorkoutService {
     console.log('got here');
     return this.http
       .get<{ [key: string]: WorkoutDataInt }>(
-        'https://revolutefitness-a92df.firebaseio.com/workouts.json'
+        `https://revolutefitness-a92df.firebaseio.com/workouts/${this.loginServ.userId}.json`
       )
       .pipe(
         map(WorkoutDataInt => {

@@ -4,6 +4,7 @@ import { auth } from 'firebase/app';
 import { NavController } from '@ionic/angular';
 import { AuthService } from '../../services/login.service';
 import { NgForm } from '@angular/forms';
+import { User } from '../../models/user.model'
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -17,7 +18,15 @@ export class RegisterPage implements OnInit {
   }
 
   async register(form: NgForm){
-    this.regService.register(form.value.email, form.value.password, form.value.name);
+    const user = new User(
+      form.value.name,
+      form.value.email,
+      form.value.userType,
+      form.value.bodyWeight,
+      form.value.height,
+    )
+    console.log(user);
+    this.regService.register(user,form.value.password);
   }
 
 
