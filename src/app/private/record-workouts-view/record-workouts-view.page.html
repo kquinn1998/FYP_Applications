@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/dashboard"></ion-back-button></ion-buttons>
+    <ion-title>Select A Workout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p *ngIf="isLoading" class="ion-text-center"><ion-spinner color="primary"></ion-spinner></p>
+  <ion-grid *ngIf="!isLoading">
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-list>
+          <div *ngFor="let workout of workouts">
+            <ion-card color="primary">
+              <div [routerLink]="['/','record-workouts-view', workout.id]">
+              <ion-card-header>
+                <ion-card-subtitle>Workout</ion-card-subtitle>
+                <ion-card-title>{{ workout.title }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                {{ workout.description }}
+              </ion-card-content>
+            </div>
+            </ion-card>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

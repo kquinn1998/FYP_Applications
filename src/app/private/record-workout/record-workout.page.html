@@ -1,52 +1,58 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Record Workout</ion-title>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/view-workouts"></ion-back-button></ion-buttons>
+    <ion-title>{{ isLoading ? 'Loading...' : workout.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="form" (ngSubmit)="recordWorkout()">
+  <div *ngIf="!isLoading">
+  <form [formGroup]="form" (ngSubmit)="editWorkout()">
+
     <ion-row>
       <ion-col size-sm="6" offset-sm="3">
-        <ion-item>
-          <ion-label position="floating">Name</ion-label>
-          <ion-input type="text" autocomplete autocorrect formControlName="title"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-item>
-          <ion-label position="floating">Description</ion-label>
-          <ion-textarea type="text" autocomplete autocorrect formControlName="description"></ion-textarea>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-item>
-          <ion-label position="floating">Exercise 1</ion-label>
-          <ion-input type="text" autocomplete autocorrect formControlName="exerciseOne"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-item>
-          <ion-label position="floating">Exercise 2</ion-label>
-          <ion-input type="text" autocomplete autocorrect formControlName="exerciseTwo"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-button color="dark"  size="large" type="submit" expand="full">Record</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-button color="dark"  size="large" routerLink='/dashboard' expand="full">Cancel</ion-button>
+        <ion-row>
+        <ion-col>
+        <div formArrayName="exercises" *ngFor="let exercise of exercises.controls; let i=index">
+          <ion-item>
+            <ion-label position="floating">Exercises</ion-label>
+            <ion-input [readonly]="!editMode" type="text" [formControlName]="i"></ion-input>
+          </ion-item>
+        </div>
+        </ion-col>
+        <ion-col>  
+        <div formArrayName="sets" *ngFor="let set of sets.controls; let i=index">
+          <ion-item>
+            <ion-label position="floating">Sets</ion-label>
+            <ion-input [readonly]="!editMode" type="text" [formControlName]="i" expand="full"></ion-input>
+          </ion-item>
+        </div>
+        </ion-col>
+        <ion-col>
+        <div formArrayName="reps" *ngFor="let rep of reps.controls; let i=index">
+          <ion-item>
+            <ion-label position="floating">Reps</ion-label>
+            <ion-input [readonly]="!editMode" type="number" [formControlName]="i"></ion-input>
+          </ion-item>
+        </div>
+        </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
   </form>
+  </div>
 </ion-content>
+<ion-footer *ngIf="editMode">
+  <ion-row>
+    <ion-col size-sm="6" offset-sm="3">
+      <ion-button color="dark"  size="large" expand="full" (click)="addExercise()">Add Exercise</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size-sm="6" offset-sm="3">
+      <ion-button color="primary"  size="large" (click)="editWorkout()" expand="full">Create</ion-button>
+    </ion-col>
+  </ion-row>
+
+</ion-footer>

@@ -23,9 +23,9 @@ const routes: Routes = [
     //canLoad: [AuthGuard]
   },
   {
-    path: 'record-workout',
+    path: 'record-workouts-view/:workoutId',
     loadChildren: () => import('./private/record-workout/record-workout.module').then( m => m.RecordWorkoutPageModule),
-    canLoad: [AuthGuard]
+    //canLoad: [AuthGuard]
   },
   {
     path: 'create-workout',
@@ -35,10 +35,16 @@ const routes: Routes = [
   {
     path: 'view-workouts/:workoutId',
     loadChildren: () => import('./private/view-workout-details/view-workout-details.module').then( m => m.ViewWorkoutDetailsPageModule)
-  },  {
+  },
+  {
     path: 'manage-clients',
     loadChildren: () => import('./private/manage-clients/manage-clients.module').then( m => m.ManageClientsPageModule)
   },
+  {
+    path: 'record-workouts-view',
+    loadChildren: () => import('./private/record-workouts-view/record-workouts-view.module').then( m => m.RecordWorkoutsViewPageModule)
+  },
+
 
 
 
