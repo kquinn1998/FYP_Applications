@@ -105,4 +105,21 @@ export class WorkoutService {
         })
       );
   }
+
+  deleteWorkout(id: string) {
+    console.log(id);
+    return this.http
+      .delete(
+        `https://revolutefitness-a92df.firebaseio.com/workouts/${this.loginServ.userId}/${id}.json`
+      )
+      .pipe(
+        switchMap(() => {
+          return this.workouts;
+        }),
+        take(1),
+        tap(bookings => {
+          this._workouts.next(bookings.filter(b => b.id !== id));
+        })
+      );
+  }
 }

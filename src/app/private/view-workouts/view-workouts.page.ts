@@ -55,4 +55,8 @@ export class ViewWorkoutsPage implements OnInit, OnDestroy{
     }
   }
 
+  deleteWorkout(id: string){
+    this.workoutServ.deleteWorkout(id).subscribe();
+  }
+
 }

@@ -23,7 +23,7 @@ export class AuthService {
   private userSub: Subscription;
 
   private _userIsAuthenticated = false;
-  private _userId;
+  private _userId = 'I5lbBWcOHDfnFByMTV1bEbi4Ccu2';
   private _currentUser;
   
   private isLoading = false;
