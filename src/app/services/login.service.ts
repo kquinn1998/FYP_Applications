@@ -7,6 +7,7 @@ import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import * as firebase from 'firebase';
 
 interface UserDataInt {
   name:string;
@@ -50,8 +51,12 @@ export class AuthService {
   async login(email: string, password: string) {
     this.isLoading = true;
     try {
+
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       const res = await this.afAuth.auth.signInWithEmailAndPassword(email,password);
       const user = this.afAuth.auth.currentUser;
+
+
       if(user.emailVerified){
         this._userId = user.uid;
 
