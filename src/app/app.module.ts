@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { FormsModule } from '@angular/forms';
 
+import * as tf from '@tensorflow/tfjs';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

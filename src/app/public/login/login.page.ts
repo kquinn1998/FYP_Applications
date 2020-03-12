@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from '../../services/login.service';
+import { MachineLearningService } from '../../services/machine-learning.service'
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginPage implements OnInit {
   isLogin = true;
 
   constructor(
+    private mlServ: MachineLearningService,
     private authService: AuthService,
     private router: Router,
     private loadingCtrl: LoadingController,

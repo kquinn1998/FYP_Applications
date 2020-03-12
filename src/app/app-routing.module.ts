@@ -43,7 +43,11 @@ const routes: Routes = [
   {
     path: 'record-workouts-view',
     loadChildren: () => import('./private/record-workouts-view/record-workouts-view.module').then( m => m.RecordWorkoutsViewPageModule)
+  },  {
+    path: 'exercise-analysis',
+    loadChildren: () => import('./private/exercise-analysis/exercise-analysis.module').then( m => m.ExerciseAnalysisPageModule)
   },
+
 
 
 
