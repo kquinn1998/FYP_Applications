@@ -9,7 +9,7 @@ export class MachineLearningService implements OnInit {
   prediction: any;
 
   constructor() { 
-    
+    this.trainModel();
   }
 
   ngOnInit(){
