@@ -15,12 +15,15 @@ export class ExerciseAnalysisPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.model = tf.loadLayersModel('/model.json');
+    this.loadModel();
   }
 
   predict(imageForm: NgForm) {
     console.log(imageForm.value.imageFilePath);
   }
 
+  async loadModel() {
+    this.model = await tf.loadLayersModel('/assets/model.json');
+  }
 
 }

@@ -1,7 +1,8 @@
 import { Injectable, OnInit } from '@angular/core';
 import * as tf from '@tensorflow/tfjs';
 import { mod } from '@tensorflow/tfjs';
-import { join } from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +12,7 @@ export class MachineLearningService implements OnInit {
   prediction: any;
 
   constructor() {
-    this.model = tf.loadLayersModel('../ml-models/final-model.json');
+    this.model = tf.loadLayersModel('');
   }
 
   ngOnInit() {
@@ -19,7 +20,8 @@ export class MachineLearningService implements OnInit {
   }
 
   async trainModel(){
-    /*this.model = new tf.Sequential({
+    /*
+    this.model = new tf.Sequential({
       layers: [
         tf.layers.conv2d({inputShape: [150, 150, 2], activation: 'relu', kernelSize: 64, filters: 64}),
         tf.layers.maxPooling2d({poolSize: [2, 2]}),
@@ -34,6 +36,32 @@ export class MachineLearningService implements OnInit {
       ]
     });
 
-    this.model.compile({optimizer: 'adam', loss: 'binaryCrossentropy', metrics: ['accuracy']});*/
+    this.model.compile({optimizer: 'adam', loss: 'binaryCrossentropy', metrics: ['accuracy']});
+
+    const images = [];
+  const labels = [];
+  
+  var files = fs.readdirSync(dataDir);
+  for (let i = 0; i < files.length; i++) { 
+    if (!files[i].toLocaleLowerCase().endsWith(".png")) {
+      continue;
+    }
+
+    var filePath = path.join(dataDir, files[i]);
+    
+    var buffer = fs.readFileSync(filePath);
+    var imageTensor = tf.node.decodeImage(buffer)
+      .resizeNearestNeighbor([96,96])
+      .toFloat()
+      .div(tf.scalar(255.0))
+      .expandDims();
+    images.push(imageTensor);
+
+    var hasTuberculosis = files[i].toLocaleLowerCase().endsWith("_1.png");
+    labels.push(hasTuberculosis ? 1 : 0);
+  }
+
+  return [images, labels];
+  */
   }
 }
