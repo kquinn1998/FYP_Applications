@@ -10,11 +10,11 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import * as firebase from 'firebase';
 
 interface UserDataInt {
-  name:string;
-  email:string;
-  userType:string;
-  bodyWeight:number;
-  height:number;
+  name: string;
+  email: string;
+  userType: string;
+  bodyWeight: number;
+  height: number;
 }
 
 @Injectable({
@@ -23,6 +23,7 @@ interface UserDataInt {
 export class AuthService {
   private userSub: Subscription;
 
+  private user: firebase.User;
   private _userIsAuthenticated = false;
   private _userId = 'I5lbBWcOHDfnFByMTV1bEbi4Ccu2';
   private _currentUser;
@@ -46,19 +47,21 @@ export class AuthService {
               private afAuth: AngularFireAuth,
               private router: Router,
               private loadingCtrl: LoadingController,
-              private http: HttpClient) {}
+              private http: HttpClient) {
+                afAuth.authState.subscribe(user => {
+                  this.user = user;
+                });
+              }
 
   async login(email: string, password: string) {
     this.isLoading = true;
     try {
 
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      const res = await this.afAuth.auth.signInWithEmailAndPassword(email,password);
-      const user = this.afAuth.auth.currentUser;
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+      const res = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
 
-
-      if(user.emailVerified){
-        this._userId = user.uid;
+      if(this.user.emailVerified){
+        this._userId = this.user.uid;
 
         this.userSub = this.getUserRecord().subscribe(userReturned => {
           this._currentUser = userReturned;
