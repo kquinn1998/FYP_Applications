@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+  </script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>Exercise Image Analysis</h1>
+  <p>Select an image of a bench press or a squat and the application will classify the image</p> 
+</div>
+  
+<div class="container">
+  <form action="/predict/" method="post" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-sm-4">
+        <h3>Select Prediction Image</h3>
+        <input name='image' id='image' class="form-control border-0" type="file" onchange="readURL(this)">
+        <button type="submit" class="btn btn-primary">Predict</button>
+      </div>
+      <div class="col-sm-4">
+        <h3>Selected Image</h3>
+        <img id="blah" src="#"/>
+      </div>
+      <div class="col-sm-4">
+        <h3>Prediction</h3>
+        <h4><b>{{ predictions }}</b></h4>
+      </div>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
