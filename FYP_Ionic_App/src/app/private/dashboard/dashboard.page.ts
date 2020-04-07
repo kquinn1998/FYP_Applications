@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from '../../services/login.service';
 import { User } from 'src/app/models/user.model';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,10 +21,16 @@ export class DashboardPage implements OnInit {
   constructor(private authService: AuthService,
               private router: Router,
               private loadingCtrl: LoadingController,
-              private loginServ: AuthService) { }
+              private loginServ: AuthService,
+              private iab: InAppBrowser) { }
 
   ngOnInit() {
     this.userType = this.loginServ.currentUser.userType;
+  }
+
+  openSite() {
+    console.log("gots here");
+    this.iab.create('http://kquinn1998.pythonanywhere.com/','_system');
   }
 
   logout() {

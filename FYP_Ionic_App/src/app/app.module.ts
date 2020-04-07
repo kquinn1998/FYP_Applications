@@ -17,6 +17,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { FormsModule } from '@angular/forms';
 
 import * as tf from '@tensorflow/tfjs';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import * as tf from '@tensorflow/tfjs';
             IonicStorageModule.forRoot(),
             FormsModule],
   providers: [
+    InAppBrowser,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
