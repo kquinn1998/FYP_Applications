@@ -7,51 +7,47 @@
 
 <ion-content>
   <div *ngIf="!isLoading">
-  <form [formGroup]="form" (ngSubmit)="editWorkout()">
+  <form [formGroup]="form" (ngSubmit)="recordWorkout()">
+
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-item>
+          <ion-label position="floating">Notes</ion-label>
+          <ion-input type="text" autocomplete autocorrect formControlName="notes"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
     <ion-row>
       <ion-col size-sm="6" offset-sm="3">
         <ion-row>
-        <ion-col>
-        <div formArrayName="exercises" *ngFor="let exercise of exercises.controls; let i=index">
-          <ion-item>
-            <ion-label position="floating">Exercises</ion-label>
-            <ion-input [readonly]="!editMode" type="text" [formControlName]="i"></ion-input>
-          </ion-item>
-        </div>
-        </ion-col>
-        <ion-col>  
-        <div formArrayName="sets" *ngFor="let set of sets.controls; let i=index">
-          <ion-item>
-            <ion-label position="floating">Sets</ion-label>
-            <ion-input [readonly]="!editMode" type="text" [formControlName]="i" expand="full"></ion-input>
-          </ion-item>
-        </div>
-        </ion-col>
-        <ion-col>
-        <div formArrayName="reps" *ngFor="let rep of reps.controls; let i=index">
-          <ion-item>
-            <ion-label position="floating">Reps</ion-label>
-            <ion-input [readonly]="!editMode" type="number" [formControlName]="i"></ion-input>
-          </ion-item>
-        </div>
-        </ion-col>
+          <ion-col>
+            <div formArrayName="exercises" *ngFor="let exercise of exercises.controls; let i=index">
+              <ion-item>
+                <ion-label position="floating">Exercises</ion-label>
+                <ion-input [readonly]='true' type="text" [formControlName]="i"></ion-input>
+              </ion-item>
+            </div>
+          </ion-col>
+          <ion-col>
+            <div formArrayName="weights" *ngFor="let weight of weights.controls; let i=index">
+              <ion-item>
+                <ion-label position="floating">Weights</ion-label>
+                <ion-input type="text" [formControlName]="i"></ion-input>
+              </ion-item>
+            </div>
+          </ion-col>
         </ion-row>
       </ion-col>
     </ion-row>
   </form>
   </div>
 </ion-content>
-<ion-footer *ngIf="editMode">
-  <ion-row>
-    <ion-col size-sm="6" offset-sm="3">
-      <ion-button color="dark"  size="large" expand="full" (click)="addExercise()">Add Exercise</ion-button>
-    </ion-col>
-  </ion-row>
+<ion-footer>
 
   <ion-row>
     <ion-col size-sm="6" offset-sm="3">
-      <ion-button color="primary"  size="large" (click)="editWorkout()" expand="full">Create</ion-button>
+      <ion-button color="primary" (click)='recordWorkout()' size="large" expand="full">Record</ion-button>
     </ion-col>
   </ion-row>
 

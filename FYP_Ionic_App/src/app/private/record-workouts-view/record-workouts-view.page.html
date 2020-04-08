@@ -13,7 +13,7 @@
         <ion-list>
           <div *ngFor="let workout of workouts">
             <ion-item-sliding>
-              <ion-item color="primary" [routerLink]="['/','view-workouts', workout.id]">
+              <ion-item color="light" [routerLink]="['/','record-workouts-view', workout.id]">
                   <ion-label class="ion-text-wrap">
                     <h1>{{ workout.title }}</h1>
                   </ion-label>

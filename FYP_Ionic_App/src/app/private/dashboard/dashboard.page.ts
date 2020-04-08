@@ -25,12 +25,13 @@ export class DashboardPage implements OnInit {
               private iab: InAppBrowser) { }
 
   ngOnInit() {
-    this.userType = this.loginServ.currentUser.userType;
+    //this.userType = this.loginServ.currentUser.userType;
+    this.userType = "personal_trainer";
   }
 
   openSite() {
     console.log("gots here");
-    this.iab.create('http://kquinn1998.pythonanywhere.com/','_system');
+    this.iab.create('http://kquinn1998.pythonanywhere.com/','_blank');
   }
 
   logout() {

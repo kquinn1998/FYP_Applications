@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Workout } from '../models/workout.model';
+import { RecordedWorkout } from '../models/recorded_workout.model';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { map, tap, switchMap, take } from 'rxjs/operators';
@@ -23,12 +24,17 @@ interface WorkoutDataInt {
 })
 export class WorkoutService {
 
-	private _workouts = new BehaviorSubject<Workout[]>([]);
+  private _workouts = new BehaviorSubject<Workout[]>([]);
+  private _recordedWorkouts = new BehaviorSubject<RecordedWorkout[]>([]);
 
 	constructor(private http: HttpClient, private loginServ: AuthService) {}
 	
 	get workouts() {
 		return this._workouts.asObservable();
+  }
+
+  get recordedWorkouts() {
+		return this._recordedWorkouts.asObservable();
   }
   
   getWorkout(id: string){
@@ -51,8 +57,23 @@ export class WorkoutService {
       );
   }
 
-  editWorkout(workout:Workout){
-    
+  editWorkout(workout: Workout){
+    let generatedId: string;
+    return this.http.put<{name: string}>(`https://revolutefitness-a92df.firebaseio.com/workouts/${this.loginServ.userId}/${workout.id}.json` ,{
+      ...workout,
+      id: null
+    })
+    .pipe(
+      switchMap(resData => {
+        generatedId = resData.name;
+        return this.workouts;
+      }),
+      take(1),
+      tap(workouts => {
+        workout.id = generatedId;
+        this._workouts.next(workouts.concat(workout));
+      })
+    )
   }
 
   createWorkout(workout: Workout){
@@ -121,5 +142,24 @@ export class WorkoutService {
           this._workouts.next(bookings.filter(b => b.id !== id));
         })
       );
+  }
+
+  recordWorkout(recordedWorkout: RecordedWorkout){
+    let generatedId: string;
+    return this.http.post<{name: string}>(`https://revolutefitness-a92df.firebaseio.com/recorded_workouts/${this.loginServ.userId}.json` ,{
+      ...recordedWorkout,
+      id: null
+    })
+    .pipe(
+      switchMap(resData => {
+        generatedId = resData.name;
+        return this.recordedWorkouts;
+      }),
+      take(1),
+      tap(recordedWorkouts => {
+        recordedWorkout.id = generatedId;
+        this._recordedWorkouts.next(recordedWorkouts.concat(recordedWorkout));
+      })
+    )
   }
 }

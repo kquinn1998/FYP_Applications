@@ -21,14 +21,6 @@ export class CreateWorkoutPage implements OnInit {
   form: FormGroup;
   isLoading = false;
 
-  /*private httpOptions = {
-    headers: new HttpHeaders({
-        'Accept': 'text/html',
-        'Content-Type': 'application/json'
-    }),
-    responseType: 'text'
-  };*/
-
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -89,6 +81,16 @@ export class CreateWorkoutPage implements OnInit {
     this.exercises.push(this.fb.control(''));
     this.sets.push(this.fb.control(''));
     this.reps.push(this.fb.control(''));
+  }
+
+  removeExercise() {
+    if(this.exercises.length > 1){
+      this.exercises.removeAt(this.exercises.length - 1);
+      this.sets.removeAt(this.sets.length - 1);
+      this.reps.removeAt(this.reps.length - 1);
+    } else {
+      console.log("cant remove last exercise");
+    }
   }
 
   createWorkout() {

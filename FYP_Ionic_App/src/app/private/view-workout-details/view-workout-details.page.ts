@@ -107,8 +107,18 @@ export class ViewWorkoutDetailsPage implements OnInit, OnDestroy {
     this.reps.push(this.fb.control(''));
   }
 
+  removeExercise() {
+    if(this.exercises.length > 1){
+      this.exercises.removeAt(this.exercises.length - 1);
+      this.sets.removeAt(this.sets.length - 1);
+      this.reps.removeAt(this.reps.length - 1);
+    } else {
+      console.log("cant remove last exercise");
+    }
+  }
+
   editWorkout() {
-    /*const newWorkout = new Workout(
+    const newWorkout = new Workout(
       this.workout.id,
       this.form.value.title,
       this.form.value.description,
@@ -118,7 +128,7 @@ export class ViewWorkoutDetailsPage implements OnInit, OnDestroy {
     );
     console.log(newWorkout);
     this.loadingCtrl
-        .create({ keyboardClose: true, message: 'Creating Workout...' })
+        .create({ keyboardClose: true, message: 'Updating Workout...' })
         .then(loadingEl => {
           loadingEl.present();
           this.workoutServ.editWorkout(
@@ -129,7 +139,6 @@ export class ViewWorkoutDetailsPage implements OnInit, OnDestroy {
             this.router.navigateByUrl('/view-workouts');
           });
         });
-    // this.router.navigateByUrl('');*/
   }
 
   ngOnDestroy() {

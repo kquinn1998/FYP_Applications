@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@ang
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
 import { Workout } from '../../models/workout.model';
+import { RecordedWorkout } from '../../models/recorded_workout.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { take, tap, delay, switchMap, map } from 'rxjs/operators';
@@ -18,6 +19,7 @@ import { LoadingController } from '@ionic/angular';
 export class RecordWorkoutPage implements OnInit {
 
   workout: Workout;
+  recordedWorkout: RecordedWorkout;
   workoutSub: Subscription;
   isLoading = false;
   editMode = false;
@@ -48,11 +50,7 @@ export class RecordWorkoutPage implements OnInit {
 
   setForm() {
     this.form = new FormGroup({
-      title: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required]
-      }),
-      description: new FormControl(null, {
+      notes: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
@@ -60,33 +58,22 @@ export class RecordWorkoutPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
-      sets: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required]
-      }),
-      reps: new FormControl(null, {
+      weights: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
     });
 
     this.form = this.fb.group({
-      title: this.workout.title,
-      description: this.workout.description,
+      notes: [''],
       exercise: [''],
       exercises: this.fb.array(this.workout.exercises),
-      set: [''],
-      sets: this.fb.array(this.workout.sets),
-      rep: [''],
-      reps: this.fb.array(this.workout.reps)
+      weight: [''],
+      weights: this.fb.array(['']),
     });
-  }
 
-  toggleEdit() {
-    if(this.editMode){
-      this.editMode=false;
-    } else {
-      this.editMode=true;
+    for (let i = 0; i < this.workout.exercises.length - 1; i++) {
+      this.exercises.push(this.fb.control(''));
     }
   }
 
@@ -95,43 +82,32 @@ export class RecordWorkoutPage implements OnInit {
     return this.form.get('exercises') as FormArray;
   }
 
-  get sets() {
-    return this.form.get('sets') as FormArray;
+  get weights() {
+    return this.form.get('weights') as FormArray;
   }
 
-  get reps() {
-    return this.form.get('reps') as FormArray;
-  }
-
-  addExercise() {
-    this.exercises.push(this.fb.control(''));
-    this.sets.push(this.fb.control(''));
-    this.reps.push(this.fb.control(''));
-  }
-
-  editWorkout() {
-    /*const newWorkout = new Workout(
-      this.workout.id,
-      this.form.value.title,
-      this.form.value.description,
+  recordWorkout() {
+    const newRecordWorkout = new RecordedWorkout(
+      '',
+      this.workout.title,
+      new Date(),
+      this.form.value.notes,
       this.form.value.exercises,
-      this.form.value.sets,
-      this.form.value.reps,
+      this.form.value.weights,
     );
-    console.log(newWorkout);
+    console.log(newRecordWorkout);
     this.loadingCtrl
-        .create({ keyboardClose: true, message: 'Creating Workout...' })
+        .create({ keyboardClose: true, message: 'Recording Workout...' })
         .then(loadingEl => {
           loadingEl.present();
-          this.workoutServ.editWorkout(
-            newWorkout
+          this.workoutServ.recordWorkout(
+            newRecordWorkout
           ).subscribe(() => {
             this.isLoading = false;
             loadingEl.dismiss();
-            this.router.navigateByUrl('/view-workouts');
+            this.router.navigateByUrl('/record-workouts-view');
           });
         });
-    // this.router.navigateByUrl('');*/
   }
 
   ngOnDestroy() {
