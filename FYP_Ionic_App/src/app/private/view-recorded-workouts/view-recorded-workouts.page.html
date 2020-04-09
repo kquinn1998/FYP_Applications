@@ -1,9 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>view-recorded-workouts</ion-title>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/dashboard"></ion-back-button></ion-buttons>
+    <ion-title>Recorded Workouts</ion-title>
+    <ion-button slot="end" fill="clear" routerLink="/record-workouts-view"><ion-icon color="primary" name="add"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <p *ngIf="isLoading" class="ion-text-center"><ion-spinner color="primary"></ion-spinner></p>
+  <ion-grid *ngIf="!isLoading">
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-list>
+          <div *ngFor="let recordedWorkout of recordedWorkouts">
+            <ion-item-sliding>
+              <ion-item [routerLink]="['/','view-recorded-workouts', recordedWorkout.id]" color="light">
+                  <ion-label slot="start" class="ion-text-wrap">
+                    <h1>{{ recordedWorkout.title }}</h1>
+                  </ion-label>
+                  <ion-label slot="end" class="ion-text-wrap">
+                    <h2>{{ recordedWorkout.date | date:'MM/dd/yyyy HH:mm'}}</h2>
+                  </ion-label>
+                <ion-icon name="arrow-round-back" size="large" slot="end"></ion-icon>
+              </ion-item>
 
+              <ion-item-options side="end">
+                <ion-item-option color="danger" (click)="deleteRecordedWorkout(recordedWorkout.id)">Delete</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

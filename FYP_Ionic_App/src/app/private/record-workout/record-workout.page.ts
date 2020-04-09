@@ -95,7 +95,6 @@ export class RecordWorkoutPage implements OnInit {
       this.form.value.exercises,
       this.form.value.weights,
     );
-    console.log(newRecordWorkout);
     this.loadingCtrl
         .create({ keyboardClose: true, message: 'Recording Workout...' })
         .then(loadingEl => {
@@ -105,7 +104,7 @@ export class RecordWorkoutPage implements OnInit {
           ).subscribe(() => {
             this.isLoading = false;
             loadingEl.dismiss();
-            this.router.navigateByUrl('/record-workouts-view');
+            this.router.navigateByUrl('/view-recorded-workouts');
           });
         });
   }

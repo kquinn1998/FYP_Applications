@@ -1,5 +1,6 @@
 <ion-header>
   <ion-toolbar>
+    <ion-button slot="start" fill="clear" (click)="logout()"><ion-icon color="primary" name="log-out"></ion-icon></ion-button>
     <ion-title>Revolute Fitness</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,6 +13,8 @@
           <ion-button color="dark"  size="large" expand="full" routerLink='/view-workouts'>View Workouts</ion-button>
 
           <ion-button color="primary"  size="large" expand="full" routerLink='/record-workouts-view'>Record Workout</ion-button>
+
+          <ion-button color="primary"  size="large" expand="full" routerLink='/view-recorded-workouts'>View Recorded Workouts</ion-button>
           
           <ion-button *ngIf="userType == 'personal_trainer'" color="dark"  size="large" expand="full" routerLink='/manage-clients'>Manage Clients</ion-button>
          
@@ -20,8 +23,6 @@
           <ion-button color="dark"  size="large" expand="full" (click)="openSite()">Exercise Analysis</ion-button>
          
           <ion-button color="primary"  size="large" expand="full">Settings</ion-button>
-         
-          <ion-button color="dark"  size="large" expand="full" (click)="logout()">Logout</ion-button>
         
         </ion-col>
     </ion-row>

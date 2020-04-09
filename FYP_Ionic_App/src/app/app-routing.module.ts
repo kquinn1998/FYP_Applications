@@ -43,13 +43,18 @@ const routes: Routes = [
   {
     path: 'record-workouts-view',
     loadChildren: () => import('./private/record-workouts-view/record-workouts-view.module').then( m => m.RecordWorkoutsViewPageModule)
-  },  {
+  },
+  {
     path: 'exercise-analysis',
     loadChildren: () => import('./private/exercise-analysis/exercise-analysis.module').then( m => m.ExerciseAnalysisPageModule)
   },
   {
     path: 'view-recorded-workouts',
     loadChildren: () => import('./private/view-recorded-workouts/view-recorded-workouts.module').then( m => m.ViewRecordedWorkoutsPageModule)
+  },
+  {
+    path: 'view-recorded-workouts/:recordedWorkoutId',
+    loadChildren: () => import('./private/view-recorded-workout-details/view-recorded-workout-details.module').then( m => m.ViewRecordedWorkoutDetailsPageModule)
   },
 
 

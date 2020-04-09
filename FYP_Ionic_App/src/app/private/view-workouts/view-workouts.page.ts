@@ -12,24 +12,7 @@ export class ViewWorkoutsPage implements OnInit, OnDestroy{
 
   private workoutSub: Subscription;
 
-  workouts: Workout[] = [
-    {
-      id:"",
-      title:"Back Workout",
-      description:"Back Workout With A Big Description",
-      exercises:[""],
-      sets:[],
-      reps:[],
-    },
-    {
-      id:"",
-      title:"Chest Workout",
-      description:"Chest Workout With A Big Description",
-      exercises:[""],
-      sets:[],
-      reps:[],
-    }
-  ];
+  workouts: Workout[] = [ ];
   isLoading = false;
 
   constructor(private workoutServ: WorkoutService) { }

@@ -19,6 +19,15 @@ interface WorkoutDataInt {
   reps: number[];
 }
 
+interface RecordedWorkoutDataInt {
+  id: string;
+  title: string;
+  date: Date;
+  notes: string;
+  exercises: string[];
+  weights: number[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,10 +40,6 @@ export class WorkoutService {
 	
 	get workouts() {
 		return this._workouts.asObservable();
-  }
-
-  get recordedWorkouts() {
-		return this._recordedWorkouts.asObservable();
   }
   
   getWorkout(id: string){
@@ -96,7 +101,6 @@ export class WorkoutService {
   }
 
   fetchWorkouts(){
-    console.log('got here');
     return this.http
       .get<{ [key: string]: WorkoutDataInt }>(
         `https://revolutefitness-a92df.firebaseio.com/workouts/${this.loginServ.userId}.json`
@@ -128,7 +132,6 @@ export class WorkoutService {
   }
 
   deleteWorkout(id: string) {
-    console.log(id);
     return this.http
       .delete(
         `https://revolutefitness-a92df.firebaseio.com/workouts/${this.loginServ.userId}/${id}.json`
@@ -138,10 +141,16 @@ export class WorkoutService {
           return this.workouts;
         }),
         take(1),
-        tap(bookings => {
-          this._workouts.next(bookings.filter(b => b.id !== id));
+        tap(workouts => {
+          this._workouts.next(workouts.filter(b => b.id !== id));
         })
       );
+  }
+
+  //RECORDED WORKOUTS
+
+  get recordedWorkouts() {
+		return this._recordedWorkouts.asObservable();
   }
 
   recordWorkout(recordedWorkout: RecordedWorkout){
@@ -161,5 +170,72 @@ export class WorkoutService {
         this._recordedWorkouts.next(recordedWorkouts.concat(recordedWorkout));
       })
     )
+  }
+
+  getRecordedWorkout(id: string){
+    return this.http
+      .get<RecordedWorkoutDataInt>(
+        `https://revolutefitness-a92df.firebaseio.com/recorded_workouts/${this.loginServ.userId}/${id}.json`
+      )
+      .pipe(
+        map(recordedWorkoutData => {
+          return new RecordedWorkout(
+            id,
+            recordedWorkoutData.title,
+            recordedWorkoutData.date,
+            recordedWorkoutData.notes,
+            recordedWorkoutData.exercises,
+            recordedWorkoutData.weights
+          );
+        }
+        )
+      );
+  }
+
+  fetchRecordedWorkouts(){
+    return this.http
+      .get<{ [key: string]: RecordedWorkoutDataInt }>(
+        `https://revolutefitness-a92df.firebaseio.com/recorded_workouts/${this.loginServ.userId}.json`
+      )
+      .pipe(
+        map(recordedWorkoutData => {
+          const recordedWorkouts = [];
+          for (const key in recordedWorkoutData) {
+            if (recordedWorkoutData.hasOwnProperty(key)) {
+              recordedWorkouts.push(
+                new RecordedWorkout(
+                  key,
+                  recordedWorkoutData[key].title,
+                  recordedWorkoutData[key].date,
+                  recordedWorkoutData[key].notes,
+                  recordedWorkoutData[key].exercises,
+                  recordedWorkoutData[key].weights
+                )
+              );
+
+            }
+          }
+          return recordedWorkouts;
+        }),
+        tap(recordedWorkouts => {
+          this._recordedWorkouts.next(recordedWorkouts);
+        })
+      );
+  }
+
+  deleteRecordedWorkout(id: string) {
+    return this.http
+      .delete(
+        `https://revolutefitness-a92df.firebaseio.com/recorded_workouts/${this.loginServ.userId}/${id}.json`
+      )
+      .pipe(
+        switchMap(() => {
+          return this.recordedWorkouts;
+        }),
+        take(1),
+        tap(recordedWorkouts => {
+          this._recordedWorkouts.next(recordedWorkouts.filter(b => b.id !== id));
+        })
+      );
   }
 }
