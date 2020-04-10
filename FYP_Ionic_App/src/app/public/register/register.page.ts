@@ -12,6 +12,8 @@ import { User } from '../../models/user.model'
 })
 export class RegisterPage implements OnInit {
 
+  public errorMessage: string;
+
   constructor(public afAuth: AngularFireAuth, public nav: NavController, private regService: AuthService) { }
 
   ngOnInit() {
@@ -25,7 +27,8 @@ export class RegisterPage implements OnInit {
       form.value.bodyWeight,
       form.value.height,
     )
-    this.regService.register(user,form.value.password);
+    await this.regService.register(user,form.value.password);
+    this.errorMessage = this.regService.registerErrorMessage;
   }
 
 

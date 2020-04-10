@@ -27,9 +27,10 @@ export class AuthService {
   private _userIsAuthenticated = false;
   private _userId = 'I5lbBWcOHDfnFByMTV1bEbi4Ccu2';
   private _currentUser;
-  
   private isLoading = false;
   private isLogin = true;
+  public loginErrorMessage: string;
+  public registerErrorMessage: string;
 
   get userIsAuthenticated() {
     return this._userIsAuthenticated;
@@ -83,8 +84,7 @@ export class AuthService {
         throw(console.error());
       }
     } catch (err) {
-      console.log(err);
-      this.isLoading = true;
+      this.loginErrorMessage = err.message;
       this.loadingCtrl
         .create({ keyboardClose: true, message: 'Logging in...' })
         .then(loadingEl => {
@@ -137,7 +137,7 @@ export class AuthService {
           }, 1500);
         });
     } catch(err) {
-      console.dir(err);
+      this.registerErrorMessage = err.message;
     }
   }
 

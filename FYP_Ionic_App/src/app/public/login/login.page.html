@@ -20,6 +20,9 @@
               <ion-input type="password" placeholder="Password" ngModel name="password" required password minLength="6"></ion-input>
             </ion-item>
           </div>
+          <div padding>
+            <ion-label color="danger">{{ errorMessage }}</ion-label>
+          </div>
           <div padding-top>
             <ion-button color="dark"  size="large" type="submit" expand="full">Login</ion-button>
           </div>

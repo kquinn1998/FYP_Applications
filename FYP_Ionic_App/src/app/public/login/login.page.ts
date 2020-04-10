@@ -17,6 +17,8 @@ export class LoginPage implements OnInit {
   password: '';
   isLoading = false;
   isLogin = true;
+  errorMessage;
+  
 
   constructor(
     private authService: AuthService,
@@ -27,8 +29,9 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  login(form: NgForm) {
-    this.authService.login(form.value.email, form.value.password);
+  async login(form: NgForm) {
+    await this.authService.login(form.value.email, form.value.password);
+    this.errorMessage = this.authService.loginErrorMessage;
   }
 
 }
