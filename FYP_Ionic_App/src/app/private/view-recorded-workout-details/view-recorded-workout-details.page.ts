@@ -65,10 +65,6 @@ export class ViewRecordedWorkoutDetailsPage implements OnInit {
       weight: [''],
       weights: this.fb.array(this.recordedWorkout.weights),
     });
-
-    for (let i = 0; i < this.recordedWorkout.exercises.length - 1; i++) {
-      this.exercises.push(this.fb.control(''));
-    }
   }
 
 

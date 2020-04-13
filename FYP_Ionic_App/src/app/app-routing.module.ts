@@ -55,7 +55,12 @@ const routes: Routes = [
   {
     path: 'view-recorded-workouts/:recordedWorkoutId',
     loadChildren: () => import('./private/view-recorded-workout-details/view-recorded-workout-details.module').then( m => m.ViewRecordedWorkoutDetailsPageModule)
-  },
+  },  {
+    path: 'user-stats',
+    loadChildren: () => import('./private/user-stats/user-stats.module').then( m => m.UserStatsPageModule)
+  }
+
+
 
 
 

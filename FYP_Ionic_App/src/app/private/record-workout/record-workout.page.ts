@@ -73,7 +73,7 @@ export class RecordWorkoutPage implements OnInit {
     });
 
     for (let i = 0; i < this.workout.exercises.length - 1; i++) {
-      this.exercises.push(this.fb.control(''));
+      this.weights.push(this.fb.control(''));
     }
   }
 
