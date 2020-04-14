@@ -36,6 +36,7 @@ export class ManageClientsPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.userServ.ptMode = false;
     this.isLoading = true;
     this.userServ.fetchUsers().subscribe(() => {
     });
@@ -64,5 +65,20 @@ export class ManageClientsPage implements OnInit {
         break;
       }
     }
+  }
+
+  async deleteClient(id: string) {
+    this.isLoading = true;
+    this.userServ.deleteClient(id).subscribe(() => {
+      this.userServ.fetchClientUsers().subscribe(() => {
+        this.isLoading = false;
+      });
+    });
+  }
+
+  manageClient(id: string){
+    this.userServ._currentClient = id;
+    this.userServ.ptMode = true;
+    this.router.navigateByUrl('/manage-client-dashboard');
   }
 }

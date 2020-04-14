@@ -58,6 +58,10 @@ const routes: Routes = [
   },  {
     path: 'user-stats',
     loadChildren: () => import('./private/user-stats/user-stats.module').then( m => m.UserStatsPageModule)
+  },
+  {
+    path: 'manage-client-dashboard',
+    loadChildren: () => import('./private/manage-client-dashboard/manage-client-dashboard.module').then( m => m.ManageClientDashboardPageModule)
   }
 
 

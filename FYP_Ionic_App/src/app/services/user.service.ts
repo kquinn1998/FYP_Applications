@@ -28,6 +28,8 @@ export class UserService {
   private _userIsAuthenticated = false;
   private _userId = 'I5lbBWcOHDfnFByMTV1bEbi4Ccu2';
   private _currentUser;
+  public ptMode = false;
+  public _currentClient;
   private isLoading = false;
   private isLogin = true;
   public loginErrorMessage: string;
@@ -38,7 +40,11 @@ export class UserService {
   }
 
   get userId() {
-    return this._userId;
+    if(this.ptMode){
+      return this._currentClient;
+    }else {
+      return this._userId;
+    }
   }
 
   get currentUser() {
@@ -248,6 +254,13 @@ export class UserService {
     return this.http.put(`https://revolutefitness-a92df.firebaseio.com/personal_trainers/${this.userId}/clients/${user.id}.json` ,{
       ...user,
     });
+  }
+
+  deleteClient(id: string) {
+    return this.http
+      .delete(
+        `https://revolutefitness-a92df.firebaseio.com/personal_trainers/${this.userId}/clients/${id}.json`
+      );
   }
 }
 

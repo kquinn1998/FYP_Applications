@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start"><ion-back-button defaultHref="/dashboard"></ion-back-button></ion-buttons>
     <ion-title>Recorded Workouts</ion-title>
-    <ion-button slot="end" fill="clear" routerLink="/record-workouts-view"><ion-icon color="primary" name="add"></ion-icon></ion-button>
+    <div *ngIf="!ptMode"><ion-button slot="end" fill="clear" routerLink="/record-workouts-view"><ion-icon color="primary" name="add"></ion-icon></ion-button></div>
   </ion-toolbar>
 </ion-header>
 
