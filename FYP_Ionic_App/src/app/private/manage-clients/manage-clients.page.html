@@ -1,9 +1,56 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>manage-clients</ion-title>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/dashboard"></ion-back-button></ion-buttons>
+    <ion-title>Manage Clients</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form #add_client_form="ngForm" (ngSubmit)="addClient(add_client_form)">
+    <ion-grid>
+      <ion-row color="dark" justify-content-center>
+        <ion-col align-self-center size-md="8" size-lg="7" size-xs="12">
+          <div text-center>
+            <h3>Add Client</h3>
+          </div>
+          <div padding>
+            <ion-item no-padding>
+            <ion-input type="email" placeholder="yourclient@email.com" ngModel name="email" required email></ion-input>
+            </ion-item>
+          </div>
+          <div *ngIf="errorMessage">
+            <ion-label color="danger">{{ errorMessage }}</ion-label>
+          </div>
+          <div padding-top>
+            <ion-button color="dark"  size="medium" type="submit" expand="full">Add</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <p *ngIf="isLoading" class="ion-text-center"><ion-spinner color="primary"></ion-spinner></p>
+  <ion-grid *ngIf="!isLoading">
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-list>
+          <div *ngFor="let client of clients">
+            <ion-item-sliding>
+              <ion-item [routerLink]="['/','view-workouts', client.id]" color="light">
+                  <ion-label class="ion-text-wrap">
+                    <h1>{{ client.name }}</h1>
+                  </ion-label>
+                <ion-icon name="arrow-round-back" size="large" slot="end"></ion-icon>
+              </ion-item>
+
+              <ion-item-options side="end">
+                <ion-item-option color="danger" >Delete</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

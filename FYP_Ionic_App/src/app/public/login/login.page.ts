@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
-import { AuthService } from '../../services/login.service';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
   
 
   constructor(
-    private authService: AuthService,
+    private authService: UserService,
     private router: Router,
     private loadingCtrl: LoadingController,
     public afAuth: AngularFireAuth) { }

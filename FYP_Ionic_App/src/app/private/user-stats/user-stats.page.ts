@@ -13,25 +13,35 @@ import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
 })
 export class UserStatsPage implements OnInit {
 
-  //Normal Page Variables
+  // Normal Page Variables
   private workoutSub: Subscription;
   workouts: RecordedWorkout[] = [ ];
   isLoading = false;
 
-  //Chart1Variables
-  chartData1: ChartDataSets[] = [{data: [], label: 'Total Weight'}];
+  // Chart1Variables
+  chartData1: ChartDataSets[] = [{data: [], label: 'Total Workout Weight'}];
   chartLabels1: Label[];
   chartOptions1 = {
     responsive: true,
     maintainAspectRatio: true,
-    aspectRatio: 1.5,
+    aspectRatio: 1,
     scales: {
       xAxes: [{
         ticks: {
-          autoSkip: false,
+          display: true,
+          autoSkip: true,
           maxRotation: 90,
-          minRotation: 90
+          minRotation: 90,
+          maxTicksLimit: 10
         }
+      }],
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          callback(value: string) {
+                  return value + 'kg';
+          }
+      },
       }]
     },
     title: {
@@ -52,7 +62,7 @@ export class UserStatsPage implements OnInit {
   ];
   chartType1 = 'line';
 
-  //Chart2 Variables
+  // Chart2 Variables
   chartData2: ChartDataSets[] = [{data: [], label: 'Total Weight'}];
   chartLabels2: Label[];
   chartOptions2 = {
@@ -89,18 +99,18 @@ export class UserStatsPage implements OnInit {
   constructor(private workoutServ: WorkoutService) { }
 
   ngOnInit() {
-    this.isLoading=true;
+    this.isLoading = true;
     this.workoutSub = this.workoutServ.recordedWorkouts.subscribe(recordedWorkouts => {
       this.workouts = recordedWorkouts;
-      this.isLoading=false;
+      this.isLoading = false;
       this.setData();
     });
   }
 
   ionViewWillEnter() {
-    this.isLoading=true;
+    this.isLoading = true;
     this.workoutServ.fetchRecordedWorkouts().subscribe(() => {
-      this.isLoading=false;
+      this.isLoading = false;
     });
   }
 
@@ -108,21 +118,19 @@ export class UserStatsPage implements OnInit {
 
     this.chartData1[0].data = [];
     this.chartLabels1 = [];
-    let i: number = this.workouts.length;
+    let i = 1;
 
-    for(let entry of this.workouts){
-      //let date: Date = new Date(entry.date);
-      //this.chartLabels.push(date.getMonth().toString() + ' ' + date.getDate().toString());
-      //console.log(date.getMonth().toString() + ' ' + date.getDate().toString())
-      //this.chartLabels.push(entry.date.toString());
-      this.chartLabels1.push(i.toString() + ' ' + entry.title);
-      i = i - 1;
+    for(const entry of this.workouts){
+      const date: Date = new Date(entry.date);
+      this.chartLabels1.push(entry.title + ' ' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
+      i = i + 1;
       let totalWeight = 0;
-      for(let weight of entry.weights){
+      for(const weight of entry.weights){
         totalWeight = totalWeight + Number(weight);
       }
       this.chartData1[0].data.push(totalWeight);
     }
+
   }
 
 }

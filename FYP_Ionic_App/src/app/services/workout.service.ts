@@ -8,7 +8,7 @@ import { RecordedWorkout } from '../models/recorded_workout.model';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { map, tap, switchMap, take } from 'rxjs/operators';
-import { AuthService } from './login.service';
+import { UserService } from './user.service';
 
 interface WorkoutDataInt {
 	title:string;
@@ -36,7 +36,7 @@ export class WorkoutService {
   private _workouts = new BehaviorSubject<Workout[]>([]);
   private _recordedWorkouts = new BehaviorSubject<RecordedWorkout[]>([]);
 
-	constructor(private http: HttpClient, private loginServ: AuthService) {}
+	constructor(private http: HttpClient, private loginServ: UserService) {}
 	
 	get workouts() {
 		return this._workouts.asObservable();

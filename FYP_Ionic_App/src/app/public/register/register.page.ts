@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app'; 
 import { NavController } from '@ionic/angular';
-import { AuthService } from '../../services/login.service';
+import { UserService } from '../../services/user.service';
 import { NgForm } from '@angular/forms';
 import { User } from '../../models/user.model'
 @Component({
@@ -14,13 +14,14 @@ export class RegisterPage implements OnInit {
 
   public errorMessage: string;
 
-  constructor(public afAuth: AngularFireAuth, public nav: NavController, private regService: AuthService) { }
+  constructor(public afAuth: AngularFireAuth, public nav: NavController, private regService: UserService) { }
 
   ngOnInit() {
   }
 
   async register(form: NgForm){
     const user = new User(
+      '',
       form.value.name,
       form.value.email,
       form.value.userType,

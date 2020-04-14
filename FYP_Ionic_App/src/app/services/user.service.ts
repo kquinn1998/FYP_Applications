@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap, take } from 'rxjs/operators';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import * as firebase from 'firebase';
 
@@ -13,16 +13,17 @@ interface UserDataInt {
   name: string;
   email: string;
   userType: string;
-  bodyWeight: number;
+  bodyWeigth: number;
   height: number;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-  private userSub: Subscription;
+export class UserService {
 
+  // Login Stuff
+  private userSub: Subscription;
   private user: firebase.User;
   private _userIsAuthenticated = false;
   private _userId = 'I5lbBWcOHDfnFByMTV1bEbi4Ccu2';
@@ -42,6 +43,18 @@ export class AuthService {
 
   get currentUser() {
     return this._currentUser;
+  }
+
+  // PT STUFF
+  private _users = new BehaviorSubject<User[]>([]);
+  private _clientUsers = new BehaviorSubject<User[]>([]);
+
+  get users() {
+    return this._users.asObservable();
+  }
+
+  get clientUsers() {
+    return this._clientUsers.asObservable();
   }
 
   constructor(public nav: NavController,
@@ -144,7 +157,8 @@ export class AuthService {
   createUserRecord(user: User, uid: string){
     return this.http.put(`https://revolutefitness-a92df.firebaseio.com/users/${uid}.json` ,{
       ...user,
-    })
+      id: null
+    });
   }
 
   getUserRecord(){
@@ -155,15 +169,85 @@ export class AuthService {
       .pipe(
         map(userData => {
           return new User(
+            this.userId,
             userData.name,
             userData.email,
             userData.userType,
-            userData.bodyWeight,
+            userData.bodyWeigth,
             userData.height,
           )
           }
         )
       );
+  }
+
+  // PT Client Stuff
+  fetchUsers(){
+    return this.http
+      .get<{ [key: string]: UserDataInt }>(
+        `https://revolutefitness-a92df.firebaseio.com/users.json`
+      )
+      .pipe(
+        map(UserDataInt => {
+          const users = [];
+          for (const key in UserDataInt) {
+            if (UserDataInt.hasOwnProperty(key) && UserDataInt[key].userType === 'client') {
+              users.push(
+                new User(
+                  key,
+                  UserDataInt[key].name,
+                  UserDataInt[key].email,
+                  UserDataInt[key].userType,
+                  UserDataInt[key].bodyWeigth,
+                  UserDataInt[key].height
+                )
+              );
+
+            }
+          }
+          return users;
+        }),
+        tap(users => {
+          this._users.next(users);
+        })
+      );
+  }
+
+  fetchClientUsers(){
+    return this.http
+      .get<{ [key: string]: UserDataInt }>(
+        `https://revolutefitness-a92df.firebaseio.com/personal_trainers/I5lbBWcOHDfnFByMTV1bEbi4Ccu2/clients.json`
+      )
+      .pipe(
+        map(UserDataInt => {
+          const users = [];
+          for (const key in UserDataInt) {
+            if (UserDataInt.hasOwnProperty(key)) {
+              users.push(
+                new User(
+                  key,
+                  UserDataInt[key].name,
+                  UserDataInt[key].email,
+                  UserDataInt[key].userType,
+                  UserDataInt[key].bodyWeigth,
+                  UserDataInt[key].height
+                )
+              );
+
+            }
+          }
+          return users;
+        }),
+        tap(users => {
+          this._clientUsers.next(users);
+        })
+      );
+  }
+
+  addClient(user: User) {
+    return this.http.put(`https://revolutefitness-a92df.firebaseio.com/personal_trainers/${this.userId}/clients/${user.id}.json` ,{
+      ...user,
+    });
   }
 }
 

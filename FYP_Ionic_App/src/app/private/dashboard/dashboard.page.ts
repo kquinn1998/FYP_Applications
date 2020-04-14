@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
-import { AuthService } from '../../services/login.service';
+import { UserService } from '../../services/user.service';
 import { User } from 'src/app/models/user.model';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
@@ -18,10 +18,10 @@ export class DashboardPage implements OnInit {
   isLogin = true;
   userType: string;
 
-  constructor(private authService: AuthService,
+  constructor(private authService: UserService,
               private router: Router,
               private loadingCtrl: LoadingController,
-              private loginServ: AuthService,
+              private loginServ: UserService,
               private iab: InAppBrowser) { }
 
   ngOnInit() {
@@ -30,7 +30,6 @@ export class DashboardPage implements OnInit {
   }
 
   openSite() {
-    console.log("gots here");
     this.iab.create('http://kquinn1998.pythonanywhere.com/','_blank');
   }
 
