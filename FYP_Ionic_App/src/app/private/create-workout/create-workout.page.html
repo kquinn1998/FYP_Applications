@@ -21,7 +21,7 @@
       <ion-col size-sm="6" offset-sm="3">
         <ion-item>
           <ion-label position="floating">Description</ion-label>
-          <ion-input type="text" clear-input autocomplete autocorrect formControlName="description"></ion-input>
+          <ion-input type="text" clear-input required="true" autocomplete autocorrect formControlName="description"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -33,7 +33,7 @@
         <div formArrayName="exercises" *ngFor="let exercise of exercises.controls; let i=index">
           <ion-item>
             <ion-label position="floating">Exercises</ion-label>
-            <ion-select [formControlName]="i" okText="Okay" cancelText="Cancel">
+            <ion-select [formControlName]="i" okText="Okay" cancelText="Cancel" required="true">
               <ion-select-option value="Bench Press">Bench Press</ion-select-option>
               <ion-select-option value="Squat">Squat</ion-select-option>
               <ion-select-option value="Deadlift">Deadlift</ion-select-option>
@@ -64,7 +64,7 @@
         <div formArrayName="sets" *ngFor="let set of sets.controls; let i=index">
           <ion-item>
             <ion-label position="floating">Sets</ion-label>
-            <ion-input type="number" clear-input [formControlName]="i" expand="full"></ion-input>
+            <ion-input type="number" clear-input [formControlName]="i" expand="full" required="true"></ion-input>
           </ion-item>
         </div>
         </ion-col>
@@ -72,7 +72,7 @@
         <div formArrayName="reps" *ngFor="let rep of reps.controls; let i=index">
           <ion-item>
             <ion-label position="floating">Reps</ion-label>
-            <ion-input type="number" clear-input [formControlName]="i"></ion-input>
+            <ion-input type="number" clear-input [formControlName]="i" required="true"></ion-input>
           </ion-item>
         </div>
         </ion-col>
@@ -84,10 +84,10 @@
 <ion-footer>
   <div padding>
     <div>
-      <ion-button color="dark"  size="large" expand="full" (click)="removeExercise()">Remove Exercise</ion-button>
+      <ion-button color="dark"  size="large" expand="full" [disabled]="exercises.length === 1"  (click)="removeExercise()">Remove Exercise</ion-button>
     </div>
     <div>
-      <ion-button color="dark"  size="large" expand="full" (click)="addExercise()">Add Exercise</ion-button>
+      <ion-button color="dark"  size="large" expand="full" [disabled]="this.form.value.exercises[this.form.value.exercises.length - 1] === '' || this.form.value.sets[this.form.value.sets.length - 1] === '' || this.form.value.reps[this.form.value.reps.length - 1] === ''" (click)="addExercise()">Add Exercise</ion-button>
     </div>
     <div>
       <ion-button color="primary"  size="large" (click)="createWorkout()" [disabled]="!form.valid" expand="full">Create</ion-button>

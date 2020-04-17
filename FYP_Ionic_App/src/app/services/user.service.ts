@@ -223,10 +223,10 @@ export class UserService {
       );
   }
 
-  fetchClientUsers(){
+  fetchClientUsers() {
     return this.http
       .get<{ [key: string]: UserDataInt }>(
-        `https://revolutefitness-a92df.firebaseio.com/personal_trainers/I5lbBWcOHDfnFByMTV1bEbi4Ccu2/clients.json`
+        `https://revolutefitness-a92df.firebaseio.com/personal_trainers/${this.currentUser.id}/clients.json`
       )
       .pipe(
         map(UserDataInt => {

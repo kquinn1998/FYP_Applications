@@ -61,7 +61,6 @@ export class CreateWorkoutPage implements OnInit {
       rep: [''],
       reps: this.fb.array([''])
     });
-
   }
 
   get exercises() {

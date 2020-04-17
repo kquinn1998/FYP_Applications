@@ -10,6 +10,13 @@
   <ion-grid *ngIf="!isLoading">
     <ion-row>
       <ion-col size-sm="6" offset-sm="3">
+        <div *ngIf="workouts.length === 0" text-center>
+          <ion-item padding-bottom padding-end>
+            <ion-label text-center class="ion-text-wrap">
+              <h1>Add a Workout</h1>
+            </ion-label>
+          </ion-item>
+        </div>
         <ion-list>
           <div *ngFor="let workout of workouts">
             <ion-item-sliding padding-bottom padding-end>
