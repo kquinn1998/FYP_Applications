@@ -32,8 +32,8 @@
           <ion-col>
             <div formArrayName="weights" *ngFor="let weight of weights.controls; let i=index">
               <ion-item>
-                <ion-label position="floating">Weights</ion-label>
-                <ion-input type="text" [formControlName]="i"></ion-input>
+                <ion-label position="floating">Weights (kg)</ion-label>
+                <ion-input type="number" clear-input [formControlName]="i"></ion-input>
               </ion-item>
             </div>
           </ion-col>

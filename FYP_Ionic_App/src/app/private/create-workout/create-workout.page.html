@@ -12,7 +12,7 @@
       <ion-col size-sm="6" offset-sm="3">
         <ion-item>
           <ion-label position="floating">Name</ion-label>
-          <ion-input type="text" autocomplete autocorrect formControlName="title"></ion-input>
+          <ion-input type="text" clear-input required="true" autocomplete autocorrect formControlName="title"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -21,7 +21,7 @@
       <ion-col size-sm="6" offset-sm="3">
         <ion-item>
           <ion-label position="floating">Description</ion-label>
-          <ion-input type="text" autocomplete autocorrect formControlName="description"></ion-input>
+          <ion-input type="text" clear-input autocomplete autocorrect formControlName="description"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -29,11 +29,34 @@
     <ion-row>
       <ion-col size-sm="6" offset-sm="3">
         <ion-row>
-        <ion-col>
+        <ion-col size="6">
         <div formArrayName="exercises" *ngFor="let exercise of exercises.controls; let i=index">
           <ion-item>
             <ion-label position="floating">Exercises</ion-label>
-            <ion-input type="text" [formControlName]="i"></ion-input>
+            <ion-select [formControlName]="i" okText="Okay" cancelText="Cancel">
+              <ion-select-option value="Bench Press">Bench Press</ion-select-option>
+              <ion-select-option value="Squat">Squat</ion-select-option>
+              <ion-select-option value="Deadlift">Deadlift</ion-select-option>
+              <ion-select-option value="Pull Ups">Pull Ups</ion-select-option>
+              <ion-select-option value="Shoulder Press">Shoulder Press</ion-select-option>
+              <ion-select-option value="Dumbell Curls">Dumbell Curls</ion-select-option>
+              <ion-select-option value="Barbell Curls">Barbell Curls</ion-select-option>
+              <ion-select-option value="Leg Curls">Leg Curls</ion-select-option>
+              <ion-select-option value="Pec Flies">Pec Flies</ion-select-option>
+              <ion-select-option value="Chest Press">Chest Press</ion-select-option>
+              <ion-select-option value="Incline Barbell Press">Incline Barbell Press</ion-select-option>
+              <ion-select-option value="Barbell Row">Barbell Row</ion-select-option>
+              <ion-select-option value="Penlay Row">Penlay Row</ion-select-option>
+              <ion-select-option value="Leg Extensions">Leg Extensions</ion-select-option>
+              <ion-select-option value="Block Pull Deadlifts">Block Pull Deadlifts</ion-select-option>
+              <ion-select-option value="Deficit Deadlifts">Deficit Deadlifts</ion-select-option>
+              <ion-select-option value="Chin Ups">Chin Ups</ion-select-option>
+              <ion-select-option value="Push Ups">Push Ups</ion-select-option>
+              <ion-select-option value="Sit Ups">Sit Ups</ion-select-option>
+              <ion-select-option value="Lateral Pull Down">Lateral Pull Down</ion-select-option>
+              <ion-select-option value="Tricep Extensions">Tricep Extensions</ion-select-option>
+              <ion-select-option value="Hammer Curls">Hammer Curls</ion-select-option>
+            </ion-select>
           </ion-item>
         </div>
         </ion-col>
@@ -41,7 +64,7 @@
         <div formArrayName="sets" *ngFor="let set of sets.controls; let i=index">
           <ion-item>
             <ion-label position="floating">Sets</ion-label>
-            <ion-input type="text" [formControlName]="i" expand="full"></ion-input>
+            <ion-input type="number" clear-input [formControlName]="i" expand="full"></ion-input>
           </ion-item>
         </div>
         </ion-col>
@@ -49,7 +72,7 @@
         <div formArrayName="reps" *ngFor="let rep of reps.controls; let i=index">
           <ion-item>
             <ion-label position="floating">Reps</ion-label>
-            <ion-input type="number" [formControlName]="i"></ion-input>
+            <ion-input type="number" clear-input [formControlName]="i"></ion-input>
           </ion-item>
         </div>
         </ion-col>
@@ -59,22 +82,15 @@
   </form>
 </ion-content>
 <ion-footer>
-  <ion-row>
-    <ion-col size-sm="6" offset-sm="3">
+  <div padding>
+    <div>
       <ion-button color="dark"  size="large" expand="full" (click)="removeExercise()">Remove Exercise</ion-button>
-    </ion-col>
-  </ion-row>
-  
-  <ion-row>
-    <ion-col size-sm="6" offset-sm="3">
+    </div>
+    <div>
       <ion-button color="dark"  size="large" expand="full" (click)="addExercise()">Add Exercise</ion-button>
-    </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col size-sm="6" offset-sm="3">
-      <ion-button color="primary"  size="large" (click)="createWorkout()" expand="full">Create</ion-button>
-    </ion-col>
-  </ion-row>
-
+    </div>
+    <div>
+      <ion-button color="primary"  size="large" (click)="createWorkout()" [disabled]="!form.valid" expand="full">Create</ion-button>
+    </div>
+  </div>
 </ion-footer>

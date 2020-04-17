@@ -4,8 +4,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  color="light">
-  <form #register_form="ngForm" (ngSubmit)="register(register_form)">
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="register()">
     <ion-grid>
       <ion-row color="dark" justify-content-center>
         <ion-col align-self-center size-md="8" size-lg="7" size-xs="12">
@@ -14,22 +14,28 @@
           </div>
           <div padding>
             <ion-item no-padding>
-              <ion-input  name="name" type="text" placeholder="Name" ngModel name="name" required></ion-input>
+              <ion-label position="floating">Full Name</ion-label>
+              <ion-input  name="name" type="text" placeholder="John Doe" clear-input autofocus autocapitalize="on" autocomplete formControlName="name" required="true"></ion-input>
             </ion-item>
             <ion-item no-padding>
-              <ion-input name="email" type="email" placeholder="your@email.com" ngModel name="email" ngModel required></ion-input>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input name="email" type="email" placeholder="your@email.com" clear-input autocomplete formControlName="email" required="true"></ion-input>
             </ion-item>
             <ion-item no-padding>
-              <ion-input name="password" type="password" placeholder="Password" ngModel name="password" ngModel required></ion-input>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input name="password" type="password" placeholder="*********" clear-on-edit clear-input formControlName="password" required ="true"></ion-input>
             </ion-item>
             <ion-item no-padding>
-              <ion-input name="height" type="number" placeholder="180cm" ngModel name="height" ngModel required></ion-input>
+              <ion-label position="floating">Height</ion-label>
+              <ion-input name="height" type="number" placeholder="180cm" clear-input ngModel formControlName="height" required="true"></ion-input>
             </ion-item>
             <ion-item no-padding>
-              <ion-input name="bodyWeight" type="number" placeholder="70kg" ngModel name="bodyWeight" ngModel required></ion-input>
+              <ion-label position="floating">Weight</ion-label>
+              <ion-input name="weight" type="number" placeholder="70kg" clear-input formControlName="weight" required="true"></ion-input>
             </ion-item>
             <ion-item no-padding>
-              <ion-select value="general_user" ngModel name="userType" ngModel required okText="Okay" cancelText="Cancel" >
+              <ion-label position="floating">User Type</ion-label>
+              <ion-select value="general_user" formControlName="userType" required="true" okText="Okay" cancelText="Cancel" >
                 <ion-select-option value="general_user">General User</ion-select-option>
                 <ion-select-option value="personal_trainer">Personal Trainer</ion-select-option>
                 <ion-select-option value="client">Client</ion-select-option>
@@ -39,15 +45,19 @@
           <div padding>
             <ion-label color="danger">{{ errorMessage }}</ion-label>
           </div>
-          <div padding-top>
-            <ion-button color="dark"  size="large" type="submit" expand="full">Register</ion-button>
-          </div>
-          <div>
-            <ion-button size="large" routerLink='/login' expand="full">Back</ion-button>
-          </div>
         </ion-col>
       </ion-row>
     </ion-grid>
   </form>
 </ion-content>
+<ion-footer>
+  <div padding>
+    <div>
+      <ion-button color="dark"  size="large" (click)="register()" [disabled]="!form.valid" expand="full">Register</ion-button>
+    </div>
+    <div>
+      <ion-button size="large" routerLink='/login' expand="full">Back</ion-button>
+    </div>
+  </div>
+</ion-footer>
   

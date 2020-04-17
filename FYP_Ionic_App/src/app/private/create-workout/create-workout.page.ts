@@ -22,7 +22,6 @@ export class CreateWorkoutPage implements OnInit {
   isLoading = false;
 
   constructor(
-    private http: HttpClient,
     private fb: FormBuilder,
     public workoutServ: WorkoutService, 
     public router: Router,

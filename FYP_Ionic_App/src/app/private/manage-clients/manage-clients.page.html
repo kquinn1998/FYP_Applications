@@ -11,18 +11,18 @@
       <ion-row color="dark" justify-content-center>
         <ion-col align-self-center size-md="8" size-lg="7" size-xs="12">
           <div text-center>
-            <h3>Add Client</h3>
+            <h2>Add Client</h2>
           </div>
           <div padding>
             <ion-item no-padding>
-            <ion-input type="email" placeholder="yourclient@email.com" ngModel name="email" required email></ion-input>
+            <ion-input type="email" placeholder="yourclient@email.com" clear-input autocomplete ngModel name="email" required email></ion-input>
             </ion-item>
           </div>
           <div *ngIf="errorMessage">
             <ion-label color="danger">{{ errorMessage }}</ion-label>
           </div>
           <div padding-top>
-            <ion-button color="dark"  size="medium" type="submit" expand="full">Add</ion-button>
+            <ion-button color="dark"  size="large" type="submit" expand="full">Add</ion-button>
           </div>
         </ion-col>
       </ion-row>
@@ -35,15 +35,15 @@
       <ion-col size-sm="6" offset-sm="3">
         <ion-list>
           <div *ngFor="let client of clients">
-            <ion-item-sliding>
-              <ion-item (click)="manageClient(client.id)" color="light">
+            <ion-item-sliding padding-bottom padding-end>
+              <ion-item (click)="manageClient(client.id)">
                   <ion-label class="ion-text-wrap">
                     <h1>{{ client.name }}</h1>
                   </ion-label>
-                <ion-icon name="arrow-round-back" size="large" slot="end"></ion-icon>
+                  <ion-icon slot="end" md="md-arrow-back"></ion-icon>
               </ion-item>
 
-              <ion-item-options side="end">
+              <ion-item-options side="end" padding-bottom padding-end>
                 <ion-item-option color="danger" (click)="deleteClient(client.id)" >Delete</ion-item-option>
               </ion-item-options>
             </ion-item-sliding>

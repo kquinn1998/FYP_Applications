@@ -11,17 +11,24 @@
   <ion-grid *ngIf="!isLoading">
     <ion-row>
       <ion-col size-sm="6" offset-sm="3">
+        <div *ngIf="workouts.length === 0" text-center>
+          <ion-item padding-bottom padding-end>
+            <ion-label text-center class="ion-text-wrap">
+              <h1>Add a Workout</h1>
+            </ion-label>
+          </ion-item>
+        </div>
         <ion-list>
           <div *ngFor="let workout of workouts">
-            <ion-item-sliding>
-              <ion-item [routerLink]="['/','view-workouts', workout.id]" color="light">
+            <ion-item-sliding padding-bottom padding-end>
+              <ion-item [routerLink]="['/','view-workouts', workout.id]">
                   <ion-label class="ion-text-wrap">
                     <h1>{{ workout.title }}</h1>
                   </ion-label>
-                <ion-icon name="arrow-round-back" size="large" slot="end"></ion-icon>
+                  <ion-icon slot="end" md="md-arrow-back"></ion-icon>
               </ion-item>
 
-              <ion-item-options side="end">
+              <ion-item-options side="end" padding-bottom padding-end>
                 <ion-item-option color="danger" (click)="deleteWorkout(workout.id)">Delete</ion-item-option>
               </ion-item-options>
             </ion-item-sliding>

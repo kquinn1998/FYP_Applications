@@ -11,9 +11,9 @@ import { map, tap, switchMap, take } from 'rxjs/operators';
 import { UserService } from './user.service';
 
 interface WorkoutDataInt {
-	title:string;
-	description:string;
-	id: string;
+  title: string;
+  description: string;
+  id: string;
   exercises: string[];
   sets: number[];
   reps: number[];
@@ -36,13 +36,13 @@ export class WorkoutService {
   private _workouts = new BehaviorSubject<Workout[]>([]);
   private _recordedWorkouts = new BehaviorSubject<RecordedWorkout[]>([]);
 
-	constructor(private http: HttpClient, private loginServ: UserService) {}
-	
-	get workouts() {
-		return this._workouts.asObservable();
+  constructor(private http: HttpClient, private loginServ: UserService) {}
+
+  get workouts() {
+    return this._workouts.asObservable();
   }
-  
-  getWorkout(id: string){
+
+  getWorkout(id: string) {
     return this.http
       .get<WorkoutDataInt>(
         `https://revolutefitness-a92df.firebaseio.com/workouts/${this.loginServ.userId}/${id}.json`
@@ -56,9 +56,8 @@ export class WorkoutService {
             workoutData.exercises,
             workoutData.sets,
             workoutData.reps
-          )
-          }
-        )
+          );
+        })
       );
   }
 
@@ -83,7 +82,7 @@ export class WorkoutService {
 
   createWorkout(workout: Workout){
     let generatedId: string;
-    return this.http.post<{name: string}>(`https://revolutefitness-a92df.firebaseio.com/workouts/${this.loginServ.userId}.json` ,{
+    return this.http.post<{name: string}>(`https://revolutefitness-a92df.firebaseio.com/workouts/${this.loginServ.userId}.json`, {
       ...workout,
       id: null
     })
@@ -97,7 +96,7 @@ export class WorkoutService {
         workout.id = generatedId;
         this._workouts.next(workouts.concat(workout));
       })
-    )
+    );
   }
 
   fetchWorkouts(){
@@ -147,13 +146,13 @@ export class WorkoutService {
       );
   }
 
-  //RECORDED WORKOUTS
+  // RECORDED WORKOUTS
 
   get recordedWorkouts() {
-		return this._recordedWorkouts.asObservable();
+    return this._recordedWorkouts.asObservable();
   }
 
-  recordWorkout(recordedWorkout: RecordedWorkout){
+  recordWorkout(recordedWorkout: RecordedWorkout) {
     let generatedId: string;
     return this.http.post<{name: string}>(`https://revolutefitness-a92df.firebaseio.com/recorded_workouts/${this.loginServ.userId}.json` ,{
       ...recordedWorkout,
@@ -172,7 +171,7 @@ export class WorkoutService {
     )
   }
 
-  getRecordedWorkout(id: string){
+  getRecordedWorkout(id: string) {
     return this.http
       .get<RecordedWorkoutDataInt>(
         `https://revolutefitness-a92df.firebaseio.com/recorded_workouts/${this.loginServ.userId}/${id}.json`
@@ -192,7 +191,7 @@ export class WorkoutService {
       );
   }
 
-  fetchRecordedWorkouts(){
+  fetchRecordedWorkouts() {
     return this.http
       .get<{ [key: string]: RecordedWorkoutDataInt }>(
         `https://revolutefitness-a92df.firebaseio.com/recorded_workouts/${this.loginServ.userId}.json`

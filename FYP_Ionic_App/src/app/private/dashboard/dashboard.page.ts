@@ -17,6 +17,7 @@ export class DashboardPage implements OnInit {
   isLoading = false;
   isLogin = true;
   userType: string;
+  userName: string;
 
   constructor(private authService: UserService,
               private router: Router,
@@ -25,8 +26,8 @@ export class DashboardPage implements OnInit {
               private iab: InAppBrowser) { }
 
   ngOnInit() {
-    //this.userType = this.loginServ.currentUser.userType;
-    this.userType = "personal_trainer";
+    this.userType = this.loginServ.currentUser.userType;
+    this.userName = this.loginServ.currentUserName;
   }
 
   openSite() {

@@ -26,8 +26,8 @@ export class UserService {
   private userSub: Subscription;
   private user: firebase.User;
   private _userIsAuthenticated = false;
-  private _userId = 'I5lbBWcOHDfnFByMTV1bEbi4Ccu2';
-  private _currentUser;
+  private _userId: string;
+  private _currentUser: User;
   public ptMode = false;
   public _currentClient;
   private isLoading = false;
@@ -40,15 +40,19 @@ export class UserService {
   }
 
   get userId() {
-    if(this.ptMode){
+    if (this.ptMode) {
       return this._currentClient;
-    }else {
+    } else {
       return this._userId;
     }
   }
 
   get currentUser() {
     return this._currentUser;
+  }
+
+  get currentUserName() {
+    return this._currentUser.name;
   }
 
   // PT STUFF
@@ -80,7 +84,7 @@ export class UserService {
       firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
       const res = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
 
-      if(this.user.emailVerified){
+      if (this.user.emailVerified){
         this._userId = this.user.uid;
 
         this.userSub = this.getUserRecord().subscribe(userReturned => {
@@ -99,8 +103,8 @@ export class UserService {
             }, 1500);
           });
         this._userIsAuthenticated = true;
-      } else{
-        throw(console.error());
+      } else {
+        this.loginErrorMessage = 'Users email needs to be verified, check your inbox !';
       }
     } catch (err) {
       this.loginErrorMessage = err.message;
@@ -126,7 +130,7 @@ export class UserService {
   async register(userObj: User, password: string) {
     this.isLoading = true;
     try {
-      const res = await this.afAuth.auth.createUserWithEmailAndPassword(userObj.email,password);
+      const res = await this.afAuth.auth.createUserWithEmailAndPassword(userObj.email, password);
       const user = this.afAuth.auth.currentUser;
       user.updateProfile({
         displayName: name,
@@ -138,9 +142,9 @@ export class UserService {
 
       this.createUserRecord(userObj, user.uid).subscribe();
 
-      user.sendEmailVerification().then(function() {
+      user.sendEmailVerification().then( resp => {
         // Email sent.
-      }).catch(function(error) {
+      }).catch(error => {
         // An error happened.
       });
 
@@ -155,19 +159,19 @@ export class UserService {
             loadingEl.dismiss();
           }, 1500);
         });
-    } catch(err) {
+    } catch (err) {
       this.registerErrorMessage = err.message;
     }
   }
 
-  createUserRecord(user: User, uid: string){
-    return this.http.put(`https://revolutefitness-a92df.firebaseio.com/users/${uid}.json` ,{
+  createUserRecord(user: User, uid: string) {
+    return this.http.put(`https://revolutefitness-a92df.firebaseio.com/users/${uid}.json` , {
       ...user,
       id: null
     });
   }
 
-  getUserRecord(){
+  getUserRecord() {
     return this.http
       .get<UserDataInt>(
         `https://revolutefitness-a92df.firebaseio.com/users/${this._userId}.json`
@@ -188,7 +192,7 @@ export class UserService {
   }
 
   // PT Client Stuff
-  fetchUsers(){
+  fetchUsers() {
     return this.http
       .get<{ [key: string]: UserDataInt }>(
         `https://revolutefitness-a92df.firebaseio.com/users.json`
@@ -251,7 +255,7 @@ export class UserService {
   }
 
   addClient(user: User) {
-    return this.http.put(`https://revolutefitness-a92df.firebaseio.com/personal_trainers/${this.userId}/clients/${user.id}.json` ,{
+    return this.http.put(`https://revolutefitness-a92df.firebaseio.com/personal_trainers/${this.userId}/clients/${user.id}.json` , {
       ...user,
     });
   }

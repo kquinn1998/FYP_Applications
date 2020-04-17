@@ -12,9 +12,9 @@
       <ion-col size-sm="6" offset-sm="3">
         <ion-list>
           <div *ngFor="let workout of workouts">
-            <ion-item-sliding>
-              <ion-item color="light" [routerLink]="['/','record-workouts-view', workout.id]">
-                  <ion-label class="ion-text-wrap">
+            <ion-item-sliding padding-bottom padding-end>
+              <ion-item [routerLink]="['/','record-workouts-view', workout.id]">
+                  <ion-label text-center class="ion-text-wrap">
                     <h1>{{ workout.title }}</h1>
                   </ion-label>
               </ion-item>
