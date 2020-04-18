@@ -71,7 +71,11 @@ const routes: Routes = [
     path: 'manage-client-dashboard',
     loadChildren: () => import('./private/manage-client-dashboard/manage-client-dashboard.module').then( m => m.ManageClientDashboardPageModule),
     canLoad: [AuthGuard]
+  },  {
+    path: 'forgot-password',
+    loadChildren: () => import('./public/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   }
+
 
 
 

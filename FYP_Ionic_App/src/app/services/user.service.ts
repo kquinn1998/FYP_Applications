@@ -191,6 +191,10 @@ export class UserService {
       );
   }
 
+  async changePasswordRequest(email: string) {
+    await this.afAuth.auth.sendPasswordResetEmail(email);
+  }
+
   // PT Client Stuff
   fetchUsers() {
     return this.http

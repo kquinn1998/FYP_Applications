@@ -15,12 +15,15 @@
           <div padding>
             <ion-item no-padding>
               <ion-label position="floating">Email</ion-label>
-            <ion-input type="email" placeholder="your@email.com" clear-input autofocus autocomplete formControlName="email" required email></ion-input>
+            <ion-input type="email" placeholder="your@email.com" clear-input autocomplete="off" autofocus formControlName="email" required email></ion-input>
             </ion-item>
             <ion-item no-padding>
               <ion-label position="floating">Password</ion-label>
-              <ion-input type="password" placeholder="Password" clear-input clear-on-edit autocomplete formControlName="password" required password minLength="6"></ion-input>
+              <ion-input type="password" placeholder="Password" clear-input clear-on-edit formControlName="password" required password minLength="6"></ion-input>
             </ion-item>
+          </div>
+          <div text-center>
+            <a href="/forgot-password">Forgot Password</a>
           </div>
           <div padding>
             <ion-label color="danger">{{ errorMessage }}</ion-label>
@@ -31,12 +34,12 @@
   </form>
 </ion-content>
 <ion-footer>
-  <div padding>
-    <div>
-      <ion-button color="dark"  size="large" (click)="login()" [disabled]="!form.valid" expand="full">Login</ion-button>
-    </div>
-    <div>
-      <ion-button size="large" routerLink='/register' expand="full">Register</ion-button>
-    </div>
-  </div>
+        <div padding>
+          <div>
+            <ion-button color="dark"  size="large" (click)="login()" [disabled]="!form.valid" expand="full">Login</ion-button>
+          </div>
+          <div>
+            <ion-button size="large" routerLink='/register' expand="full">Register</ion-button>
+          </div>
+        </div>
 </ion-footer>
