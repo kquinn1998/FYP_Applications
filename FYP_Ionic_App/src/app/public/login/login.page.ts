@@ -9,17 +9,18 @@ import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  styleUrls: ['./login.page.scss']
 })
 export class LoginPage implements OnInit {
+
+  constructor(
+    private authService: UserService,
+    private fb: FormBuilder,) { }
 
   form: FormGroup;
   isLoading = false;
   errorMessage;
-
-  constructor(
-    private authService: UserService,
-    private fb: FormBuilder) { }
+  isKeyboardHide: boolean;
 
   ngOnInit() {
     this.form = new FormGroup({
