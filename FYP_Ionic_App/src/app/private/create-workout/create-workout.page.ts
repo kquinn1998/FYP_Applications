@@ -113,6 +113,5 @@ export class CreateWorkoutPage implements OnInit {
             this.router.navigateByUrl('/view-workouts');
           });
         });
-    // this.router.navigateByUrl('');
   }
 }
