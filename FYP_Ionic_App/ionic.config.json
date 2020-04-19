@@ -1,7 +1,8 @@
 {
   "name": "Revolute_Fitness",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

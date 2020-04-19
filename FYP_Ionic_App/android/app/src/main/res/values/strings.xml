@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">RevoluteFitness</string>
+    <string name="title_activity_main">RevoluteFitness</string>
+    <string name="package_name">com.itcarlow.revolutefitness</string>
+    <string name="custom_url_scheme">com.itcarlow.revolutefitness</string>
+</resources>
